@@ -303,16 +303,81 @@
 }
 
 /* responsive: 작은 화면에서는 header row를 세로로 */
-@media (max-width: 720px){
+@media (max-width: 768px){
   .site-header{
     grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-areas:
+      "title"
+      "welcome"
+      "nav";
+    gap: 16px;
   }
+
+  .site-title{
+    font-size: 24px;
+    margin-top: 0;
+  }
+
+  .header-right{
+    row-gap: 10px;
+  }
+
+  .welcome-msg{
+    margin-top: 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
   .main-nav{
     grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 12px;
+    margin-bottom: 24px;
   }
+
+  .persona-title{
+    font-size: 14px;
+  }
+
+  .gnb{
+    font-size: 12px;
+  }
+
+  .gnb li{
+    margin: 0 0 3px 0;
+  }
+
+  .section-title{
+    font-size: 12px;
+  }
+
   .works-list{
-    font-size: 28px;
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .works-list li{
+    margin: 0 0 6px 0;
+  }
+
+  .site-footer{
+    position: relative;
+    left: 0;
+    bottom: 0;
+    margin-top: 60px;
+    padding-bottom: 80px;
+  }
+
+  .copyright{
+    font-size: 10px;
+  }
+
+  .contact-links{
+    flex-direction: column;
+    gap: 12px;
+    font-size: 12px;
+    bottom: 20px;
+    right: 20px;
   }
 }
 /* ===== Work panel ===== */
@@ -466,4 +531,81 @@
   font-size: 12px;
   color: var(--text-soft);
   line-height: 1.5;
+}
+
+/* Mobile responsive for panels */
+@media (max-width: 768px){
+  .work-panel-inner{
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 24px;
+    padding: 0 20px;
+  }
+
+  .work-preview{
+    width: min(100%, calc(100vw - 40px));
+    aspect-ratio: 3 / 4;
+  }
+
+  .work-cats{
+    margin-left: 0;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  .work-cats .cat{
+    margin: 0;
+  }
+
+  .selected-work-panel-inner{
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 20px;
+  }
+
+  .selected-work-preview{
+    width: min(100%, calc(100vw - 40px));
+    aspect-ratio: 3 / 4;
+  }
+
+  .info-panel-inner{
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 20px;
+  }
+
+  .info-box{
+    width: min(100%, calc(100vw - 40px));
+    aspect-ratio: 3 / 4;
+    padding: 20px;
+  }
+
+  .info-title{
+    font-size: 14px;
+  }
+
+  .info-text{
+    font-size: 11px;
+  }
+
+  .easter-modal .modal-content{
+    width: calc(100vw - 40px);
+    padding: 18px;
+  }
+
+  .modal-content .msg{
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .modal-content .hint{
+    font-size: 11px;
+  }
 }

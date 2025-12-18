@@ -119,6 +119,25 @@ a:hover{ color: var(--hi); }
   position: relative;
 }
 
+/* Mobile responsive adjustments */
+@media (max-width: 768px){
+  :root{
+    --m: 20px;
+  }
+
+  .container{
+    grid-template-columns: 1fr;
+  }
+
+  .left-column{
+    min-height: auto;
+  }
+
+  .right-column{
+    display: none; /* 모바일에서는 fixed contact-links만 표시 */
+  }
+}
+
 /* Theme switcher: top-right pixel */
 .theme-switcher{
   position: fixed;
@@ -168,4 +187,17 @@ a:hover{ color: var(--hi); }
 
 .theme-option.hidden{
   display: none;
+}
+
+/* Mobile responsive for theme switcher */
+@media (max-width: 768px){
+  .theme-btn{
+    width: 16px;
+    height: 16px;
+  }
+
+  .theme-option{
+    width: 16px;
+    height: 16px;
+  }
 }
