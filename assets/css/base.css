@@ -1,0 +1,171 @@
+:root{
+  --m: 40px;
+  --bg-default: #07090D;
+  --text-soft: #a3a3a3;
+  --text-strong: #ffffff;
+  --mint: #97E4D5;
+}
+
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  background: var(--bg-default);
+  color: var(--text-soft);
+  font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+
+  transition: background-color 400ms ease, color 400ms ease;
+}
+
+/* ===== 테마 디졸브 전환 (깜빡임 없이) ===== */
+
+/* Galmuri utility */
+.galmuri{
+  font-family: "Galmuri7", monospace;
+  letter-spacing: -0.01em;
+}
+
+/* Theme system */
+body.theme-default{
+  --bg: var(--bg-default);
+  --fg: var(--text-soft);
+  --hi: var(--text-strong);
+  --accent: var(--mint);
+}
+body.theme-white{
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --hi: #000000;
+  --accent: #97E4D5;
+}
+body.theme-black{
+  --bg: #07090D;
+  --fg: #a3a3a3;
+  --hi: #ffffff;
+  --accent: #97E4D5;
+}
+body.theme-mint{
+  /* 타이포는 블랙 모드랑 동일 */
+  --bg: #000000;
+  --fg: #a3a3a3;
+  --hi: #ffffff;
+  --accent: #ffffff;
+}
+body.theme-red{
+  --bg: #FE1804;
+  --fg: #ffffff;
+  --hi: #ffffff;
+  --accent: #ffffff;
+}
+body.theme-mint-bg{
+  --bg: #97E4D5;
+  --fg: #1a1a1a;
+  --hi: #000000;
+  --accent: #000000;
+}
+
+/* 민트 테마 전환 시 배경 이미지 페이드 효과 */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: #000000;
+  background-image: url("./img/bg-mint.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 400ms ease;
+}
+
+body.theme-mint::before{
+  opacity: 1;
+}
+
+/* 이미지가 위로! */
+body{
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* links */
+a{
+  color: inherit;
+  text-decoration: none;
+}
+a:hover{ color: var(--hi); }
+
+/* container: 2 columns */
+.container{
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+}
+
+/* left column full height */
+.left-column{
+  min-height: 100vh;
+}
+
+/* right column sticks to bottom-right */
+.right-column{
+  position: relative;
+}
+
+/* Theme switcher: top-right pixel */
+.theme-switcher{
+  position: fixed;
+  top: var(--m);
+  right: var(--m);
+  z-index: 50;
+}
+
+.theme-btn{
+  width: 14px;
+  height: 14px;
+  background: rgba(163,163,163,0.55);
+  border: 1px solid rgba(163,163,163,0.35);
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-menu{
+  position: absolute;
+  top: 20px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.theme-menu.open{
+  max-height: 200px;
+  opacity: 1;
+}
+
+.theme-option{
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(163,163,163,0.35);
+  padding: 0;
+  cursor: pointer;
+}
+.theme-option.white{ background: #ffffff; }
+.theme-option.black{ background: #000000; }
+.theme-option.mint{ background: #97E4D5; }
+.theme-option.red{ background: #FE1804; }
+
+.theme-option.hidden{
+  display: none;
+}

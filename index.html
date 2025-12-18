@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dichotomiccc</title>
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Galmuri -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css" />
+
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/home.css" />
+</head>
+
+<body class="theme-default">
+  <!-- Theme Switcher (우측 상단: 희미한 픽셀 사각형) -->
+  <div class="theme-switcher" id="themeSwitcher" aria-label="theme switcher">
+    <button class="theme-btn" id="themeBtn" aria-label="테마 열기"></button>
+    <div class="theme-menu" id="themeMenu" aria-label="theme menu">
+      <button class="theme-option white" data-theme="white" aria-label="화이트 테마"></button>
+      <button class="theme-option black" data-theme="black" aria-label="블랙 테마"></button>
+      <button class="theme-option mint" data-theme="mint" aria-label="민트 테마"></button>
+      <button class="theme-option red hidden" data-theme="red" aria-label="레드 테마" id="redTheme"></button>
+    </div>
+  </div>
+
+  
+  <!-- Main -->
+  <div class="container">
+    <!-- Left Column -->
+    <aside class="left-column">
+      <div class="left-inner">
+
+        <!-- Header -->
+        <header class="site-header">
+        <h1 class="site-title galmuri">dichotomiccc</h1>
+      
+      <div class="header-right">
+      <div class="welcome-msg">
+      <p>min의 페이지에 오신걸 환영합니다.</p>
+      <p>dichotomiccc은 min이 운영하는 개인 디자인 아카이브 입니다</p>
+    </div>
+  </div>
+
+  <!-- ✅ 여기로 이동 (header-right 밖) -->
+  <nav class="main-nav">
+    <button class="persona-title galmuri" id="personaTitle" type="button">
+      dichotomiccc_smin
+    </button>
+
+    <ul class="gnb galmuri">
+      <li><a href="#works">works</a></li>
+      <li><a href="about.html">about</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+        <!-- Selected Work -->
+        <section class="selected-works" id="works">
+          <h2 class="section-title galmuri">selected work</h2>
+          <ul class="works-list galmuri">
+            <li><a href="#ddd">ddd</a></li>
+            <li><a href="#thevois">thevois</a></li>
+            <li><a href="#aurevo">aurevo</a></li>
+            <li><a href="#solife">solife</a></li>
+            <li><a href="#iptime_re">iptime_re</a></li>
+            <li><a href="#drOracle_re">dr.Oracle_re</a></li>
+            <li><a href="#re_memory">re:memory</a></li>
+          </ul>
+        </section>
+
+        <!-- Footer Left -->
+        <footer class="site-footer">
+          <p class="copyright">© 2026 dichotomiccc all rights deserved.</p>
+        </footer>
+
+      </div>
+    </aside>
+
+    <!-- Right Column (bottom-right links) -->
+    <aside class="right-column" id="contact">
+      <nav class="contact-links galmuri">
+        <a href="mailto:wjs400@naver.com">Email</a>
+        <a href="https://instagram.com/dichotomiccc" target="_blank" rel="noopener">Instagram</a>
+        <a href="#blog">blog</a>
+        <a href="#more">more</a>
+      </nav>
+    </aside>
+  </div>
+  
+  <!-- Work Panel (hidden by default) -->
+  <section class="work-panel" id="workPanel" aria-hidden="true">
+    <div class="work-panel-inner">
+      <div class="work-preview" aria-label="work preview">
+        <img id="workImg" src="./assets/img/works/uxui/01.jpg" alt="work preview" />
+      </div>
+
+      <ul class="work-cats galmuri" id="workCats" aria-label="work categories">
+        <li><button class="cat is-active" data-cat="uxui" type="button">uxui</button></li>
+        <li><button class="cat" data-cat="branding" type="button">branding</button></li>
+        <li><button class="cat" data-cat="editorial" type="button">editorial</button></li>
+        <li><button class="cat" data-cat="graphic" type="button">graphic</button></li>
+        <li><button class="cat" data-cat="motion" type="button">motion</button></li>
+        <li><button class="cat" data-cat="etc" type="button">etc</button></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Selected Work Detail Panel -->
+  <section class="selected-work-panel" id="selectedWorkPanel" aria-hidden="true">
+    <div class="selected-work-panel-inner">
+      <div class="selected-work-preview" aria-label="selected work preview">
+        <img id="selectedWorkImg" src="./assets/img/selected/ddd.jpg" alt="selected work preview" />
+      </div>
+    </div>
+  </section>
+
+  <!-- About Panel -->
+  <section class="info-panel" id="aboutPanel" aria-hidden="true">
+    <div class="info-panel-inner">
+      <div class="info-box">
+        <h3 class="info-title galmuri">저를 소개하는 내용입니다.</h3>
+        <p class="info-text">준비중 입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Panel -->
+  <section class="info-panel" id="contactPanel" aria-hidden="true">
+    <div class="info-panel-inner">
+      <div class="info-box">
+        <h3 class="info-title galmuri">저의 연락처 입니다.</h3>
+        <p class="info-text">준비중 입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Easter Egg Modal -->
+  <div class="easter-modal" id="easterModal" aria-hidden="true">
+    <div class="modal-content galmuri" role="dialog" aria-modal="true" aria-label="easter message">
+      <div class="msg msg-kr" data-lang="kr" data-mode="illustration">
+        안녕하세요.<br />
+        지금부터 해당 페이지는 일러스트 아카이브 페이지로 전환됩니다.<br />
+        찾아주셔서 대단히 감사합니다.
+      </div>
+
+      <div class="msg msg-en" data-lang="en" data-mode="illustration">
+        Hello.<br />
+        From now on, this page will be switched to an illustration archive page.<br />
+        Thank you so much for finding it.
+      </div>
+
+      <div class="msg msg-jp" data-lang="jp" data-mode="illustration">
+        こんにちは。<br />
+        今からこのページはイラストアーカイブページに切り替わります。<br />
+        見つけてくださって本当にありがとうございます。
+      </div>
+
+      <div class="msg msg-kr" data-lang="kr" data-mode="design">
+        안녕하세요.<br />
+        지금부터 해당 페이지는 디자인 아카이브 포트폴리오 페이지로 전환됩니다.
+      </div>
+
+      <div class="msg msg-en" data-lang="en" data-mode="design">
+        Hello.<br />
+        From now on, this page will be switched to a design archive portfolio page.
+      </div>
+
+      <div class="msg msg-jp" data-lang="jp" data-mode="design">
+        こんにちは。<br />
+        今からこのページはデザインアーカイブポートフォリオページに切り替わります。
+      </div>
+
+      <div class="hint">
+        (click anywhere to close)
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/home.js"></script>
+</body>
+</html>
