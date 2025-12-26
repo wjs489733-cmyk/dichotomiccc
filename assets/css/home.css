@@ -1,6 +1,133 @@
-/* ===== Layout baseline ===== */
+/* ===== 타이포 설정 (위치 + 크기) ===== */
+:root {
+  /* ========== 데스크탑 타이포 ========== */
+
+  /* 🔧 타이틀 (dichotomiccc) */
+  --title-size: 34px;
+  --title-x: 0px;
+  --title-y: 0px;
+
+  /* 🔧 설명문구 (min의 페이지에 오신걸...) */
+  --welcome-size: 12px;
+  --welcome-x: 0px;
+  --welcome-y: 0px;
+
+  /* 🔧 dichotomiccc_smin */
+  --persona-size: 16px;
+  --persona-x: 0px;
+  --persona-y: 0px;
+
+  /* 🔧 GNB (works/about/contact) */
+  --gnb-size: 14px;
+  --gnb-x: 15px;
+  --gnb-y: 0px;
+
+  /* 🔧 Selected Work 섹션 */
+  --selected-x: 0px;
+  --selected-y: 0px;
+  --selected-title-size: 14px;      /* "selected work" 제목 */
+  --selected-list-size: 34px;       /* ddd, thevois 등 리스트 */
+
+  /* ========== 데스크탑 프레임 ========== */
+
+  /* 🔧 Work Panel (works 버튼 클릭 시 - 카테고리 사진) */
+  --work-frame-width: min(500px, 38vw);
+  --work-frame-max-height: min(640px, calc(100vh - 180px));
+  --work-frame-top: 114px;
+  --work-frame-left: 50%;
+  --work-frame-transform-x: -35%;
+  --work-frame-bg: transparent;
+  --work-frame-border: none;
+
+  /* 🔧 Work Panel - 카테고리 리스트 (uxui, branding 등) */
+  --work-panel-gap: 50px;         /* 사진과 카테고리 리스트 사이 간격 */
+  --work-cats-x: 0px;
+  --work-cats-y: 0px;
+  --work-cats-size: 16px;
+  --work-cats-gap: 6px;
+
+  /* 🔧 Selected Work Panel (ddd, thevois 등 클릭 시) */
+  --selected-frame-width: min(480px, 38vw);
+  --selected-frame-max-height: min(640px, calc(100vh - 180px));
+  --selected-frame-top: 114px;
+  --selected-frame-left: 50%;
+  --selected-frame-transform-x: -35%;
+  --selected-frame-bg: transparent;
+  --selected-frame-border: none;
+
+  /* 🔧 Info Panel (about/contact 버튼 클릭 시) */
+  --info-frame-width: min(420px, 36vw);
+  --info-frame-max-height: min(560px, calc(100vh - 180px));
+  --info-frame-top: 114px;
+  --info-frame-left: 50%;
+  --info-frame-transform-x: -35%;
+  --info-frame-bg: #07090D;
+  --info-frame-border: 1px solid rgba(255, 255, 255, 0.8);
+  --info-frame-padding: 24px;
+  --info-title-size: 16px;
+  --info-title-color: #ffffff;
+  --info-text-size: 12px;
+  --info-text-color: var(--text-soft);
+
+  /* ========== 모바일 타이포 ========== */
+
+  /* 🔧 타이틀 (dichotomiccc) */
+  --title-mobile-size: 34px;
+  --title-mobile-x: 0px;
+  --title-mobile-y: 6px;
+
+  /* 🔧 설명문구 */
+  --welcome-mobile-size: 12px;
+  --welcome-mobile-x: 0px;
+  --welcome-mobile-y: -20px;
+
+  /* 🔧 dichotomiccc_smin */
+  --persona-mobile-size: 18px;
+  --persona-mobile-x: 0px;
+  --persona-mobile-y: 0px;
+
+  /* 🔧 GNB (works/about/contact) */
+  --gnb-mobile-size: 12px;
+  --gnb-mobile-x: 0px;
+  --gnb-mobile-y: -20px;
+
+  /* 🔧 Selected Work 섹션 */
+  --selected-mobile-x: 0px;
+  --selected-mobile-y: 0px;
+  --selected-mobile-title-size: 18px;   /* "selected work" 제목 */
+  --selected-mobile-list-size: 28px;    /* ddd, thevois 등 리스트 */
+
+  /* ========== 모바일 프레임 ========== */
+
+  /* 🔧 Work Panel (works 버튼 클릭 시 - 카테고리 사진) */
+  --work-frame-mobile-width: min(360px, 80vw);
+  --work-frame-mobile-ratio: 3 / 4;
+  --work-frame-mobile-bg: transparent;
+  --work-frame-mobile-border: 1px solid rgba(163, 163, 163, 0.25);
+
+  /* 🔧 Selected Work Panel (ddd, thevois 등 클릭 시) */
+  --selected-frame-mobile-width: min(360px, 80vw);
+  --selected-frame-mobile-ratio: 3 / 4;
+  --selected-frame-mobile-bg: var(--bg);
+  --selected-frame-mobile-border: 1px solid rgba(163, 163, 163, 0.25);
+
+  /* 🔧 Info Panel (about/contact 버튼 클릭 시) */
+  --info-frame-mobile-width: min(360px, 80vw);
+  --info-frame-mobile-ratio: 3 / 4;
+  --info-frame-mobile-bg: var(--bg);
+  --info-frame-mobile-border: 1px solid rgba(163, 163, 163, 0.5);
+  --info-frame-mobile-padding: 24px;
+  --info-title-mobile-size: 16px;
+  --info-title-mobile-color: var(--hi);
+  --info-text-mobile-size: 12px;
+  --info-text-mobile-color: var(--text-soft);
+}
+
 .left-inner{
   padding: var(--m);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Header: 2-row grid (title/welcome on row1, nav on row2) */
@@ -15,10 +142,12 @@
   align-items: start;
 }
 
-/* dichotomiccc 타이틀 y값 수정할거면 여기서!!!!!!!!!!! */
+/* 🔧 데스크탑 타이틀 */
 .site-title{
-  line-height: 0.88;
+  font-size: var(--title-size);
+  line-height: 0.7;
   margin-top: 10px;
+  transform: translate(var(--title-x), var(--title-y));
 }
 .header-right{
   grid-area: welcome;
@@ -47,12 +176,14 @@
   justify-self: start;
 }
 
+/* 🔧 타이틀 옆 설명 문구 */
 .welcome-msg{
   margin-top: 12px;
   font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
-  font-size: 12px;
+  font-size: var(--welcome-size);
   line-height: 1.55;
   color: var(--text-soft);
+  transform: translate(var(--welcome-x), var(--welcome-y));
 }
 .welcome-msg p{ margin: 0; }
 
@@ -65,33 +196,36 @@
   margin-bottom: 34px;
 }
 
-/* persona title should feel like text */
+/* 🔧 데스크탑 dichotomiccc_smin */
 .persona-title{
   appearance: none;
   background: transparent;
   border: 0;
   padding: 0;
   color: var(--hi);
-  font-size: 16px;
+  font-size: var(--persona-size);
   line-height: 1.25;
   text-align: left;
   cursor: pointer;
+  transform: translate(var(--persona-x), var(--persona-y));
 }
 
-/* GNB list tight */
+/* 🔧 GNB list */
 .gnb{
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: var(--gnb-size);
   line-height: 1.15;
+  transform: translate(var(--gnb-x), var(--gnb-y));
 }
 .gnb li{ margin: 0 0 4px 0; }
 .gnb a{
   display: inline-block; /* 터치 영역 줄이기 */
   padding: 1px 0;        /* 최소 */
   color: var(--text-soft); /* 기본 a3a3a3 */
-  transition: color 0.15s ease;
+  text-shadow: none; /* 기본 상태: 빛나는 효과 제거 */
+  transition: color 0.15s ease, text-shadow 0.15s ease;
 }
 
 .gnb a.active{
@@ -108,16 +242,18 @@
     0 0 14px rgba(255,255,255,0.25);
 }
 
-/* Selected work */
+/* 🔧 데스크탑 Selected work */
 .selected-works{
-  margin-top: 6px;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  transform: translate(var(--selected-x), var(--selected-y));
 }
 
 .section-title{
   margin: 0 0 12px 0;
-  font-size: 14px;
+  font-size: var(--selected-title-size);
   line-height: 1.2;
-  color: #ffffff;
+  color: var(--hi);
 }
 
 /* Works list: a3a3a3 기본, hover 흰색, 행간 타이트 */
@@ -125,7 +261,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 34px;   /* Figma 느낌의 큰 픽셀 리스트 */
+  font-size: var(--selected-list-size);
   line-height: 1.06; /* 행간 좁게 */
   letter-spacing: -0.02em;
 }
@@ -136,12 +272,21 @@
   display: inline-block; /* 터치 영역 줄이기 */
   padding: 1px 0;
   color: var(--text-soft);
+  transition: color 0.15s ease, text-shadow 0.15s ease;
 }
 .works-list a:hover{
   color: var(--hi);
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.55),
+    0 0 14px rgba(255,255,255,0.25);
 }
 
-/* Footer left-bottom */
+/* Contact links - selected work 아래 위치 (데스크탑에서는 숨김) */
+.left-column .contact-links{
+  display: none;
+}
+
+/* Footer left-bottom - 최하단 위치 */
 .site-footer{
   position: fixed;
   left: var(--m);
@@ -156,8 +301,8 @@
   color: #a3a3a3;
 }
 
-/* Contact links bottom-right */
-.contact-links{
+/* Contact links bottom-right (데스크탑 전용) */
+.right-column .contact-links{
   position: fixed;
   right: var(--m);
   bottom: var(--m);
@@ -171,7 +316,7 @@
   padding: 1px 0;
   color: var(--text-soft);      /* 기본: a3a3a3 */
   opacity: 1;
-  position: relative;              /* underline용 */
+  position: relative;             /* underline용 */
   transition: color 0.15s ease;    /* 색 전환 */
 }
 .contact-links a:hover{
@@ -302,84 +447,6 @@
   100% { transform: translateY(10px); }
 }
 
-/* responsive: 작은 화면에서는 header row를 세로로 */
-@media (max-width: 768px){
-  .site-header{
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "welcome"
-      "nav";
-    gap: 16px;
-  }
-
-  .site-title{
-    font-size: 24px;
-    margin-top: 0;
-  }
-
-  .header-right{
-    row-gap: 10px;
-  }
-
-  .welcome-msg{
-    margin-top: 0;
-    font-size: 11px;
-    line-height: 1.5;
-  }
-
-  .main-nav{
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .persona-title{
-    font-size: 14px;
-  }
-
-  .gnb{
-    font-size: 12px;
-  }
-
-  .gnb li{
-    margin: 0 0 3px 0;
-  }
-
-  .section-title{
-    font-size: 12px;
-  }
-
-  .works-list{
-    font-size: 24px;
-    line-height: 1.15;
-  }
-
-  .works-list li{
-    margin: 0 0 6px 0;
-  }
-
-  .site-footer{
-    position: relative;
-    left: 0;
-    bottom: 0;
-    margin-top: 60px;
-    padding-bottom: 80px;
-  }
-
-  .copyright{
-    font-size: 10px;
-  }
-
-  .contact-links{
-    flex-direction: column;
-    gap: 12px;
-    font-size: 12px;
-    bottom: 20px;
-    right: 20px;
-  }
-}
 /* ===== Work panel ===== */
 .work-panel{
   position: fixed;
@@ -392,41 +459,55 @@
 
 .work-panel-inner{
   position: absolute;
-  top: 120px; /* works 카테고리와 같은 높이 */
-  left: 50%;
-  transform: translateX(-35%); /* 좌측 메뉴 고려해서 살짝 오른쪽 */
+  top: var(--work-frame-top);
+  left: var(--work-frame-left);
+  transform: translateX(var(--work-frame-transform-x));
   display: grid;
   grid-template-columns: auto auto;
-  column-gap: 56px;
+  column-gap: var(--work-panel-gap);
   align-items: start;
 }
 
-/* 4:3 세로 프레임 = 3/4 */
+/* 🔧 데스크탑 Work Panel 프레임 */
 .work-preview{
-  width: min(480px, 38vw); /* 크기 확대 */
+  width: var(--work-frame-width);
   aspect-ratio: 3 / 4;
-  background: rgba(255,255,255,0.85); /* 와이어프레임 느낌 */
+  max-height: var(--work-frame-max-height);
+  background: var(--work-frame-bg);
   overflow: hidden;
-  border: 1px solid rgba(163,163,163,0.25);
+  border: var(--work-frame-border);
+  position: relative;
 }
 
 .work-preview img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   opacity: 1;
   transition: opacity 180ms ease;
 }
 
-/* 카테고리 리스트 */
+/* ✅ 추가됨: 현재 카테고리 라벨 스타일 (PC에서는 숨김) */
+.current-cat-label {
+  display: none; 
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: #ffffff;
+  font-size: 20px;
+  text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+/* 🔧 카테고리 리스트 */
 .work-cats{
   list-style: none;
   margin: 0;
-  margin-left: -30px; /* 왼쪽 정렬 맞추기 */
   padding: 0;
-  font-size: 16px;
+  font-size: var(--work-cats-size);
   line-height: 1.0;
+  transform: translate(var(--work-cats-x), var(--work-cats-y));
 }
 
 .work-cats .cat{
@@ -434,7 +515,7 @@
   background: transparent;
   border: 0;
   padding: 0;
-  margin: 0 0 6px 0;
+  margin: 0 0 var(--work-cats-gap) 0;
   cursor: pointer;
   color: var(--text-soft); /* 기본 #a3a3a3 */
   font-family: "Galmuri7", monospace;
@@ -465,25 +546,27 @@
 
 .selected-work-panel.open{ display: block; }
 
+/* 🔧 데스크탑 Selected Work Panel */
 .selected-work-panel-inner{
   position: absolute;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-35%);
+  top: var(--selected-frame-top);
+  left: var(--selected-frame-left);
+  transform: translateX(var(--selected-frame-transform-x));
 }
 
 .selected-work-preview{
-  width: min(480px, 38vw);
+  width: var(--selected-frame-width);
   aspect-ratio: 3 / 4;
-  background: rgba(255,255,255,0.85);
+  max-height: var(--selected-frame-max-height);
+  background: var(--selected-frame-bg);
   overflow: hidden;
-  border: 1px solid rgba(163,163,163,0.25);
+  border: var(--selected-frame-border);
 }
 
 .selected-work-preview img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   opacity: 1;
 }
@@ -498,19 +581,21 @@
 
 .info-panel.open{ display: block; }
 
+/* 🔧 데스크탑 Info Panel (about/contact) */
 .info-panel-inner{
   position: absolute;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-35%);
+  top: var(--info-frame-top);
+  left: var(--info-frame-left);
+  transform: translateX(var(--info-frame-transform-x));
 }
 
 .info-box{
-  width: min(420px, 36vw);
+  width: var(--info-frame-width);
   aspect-ratio: 3 / 4;
-  background: #07090D;
-  border: 1px solid rgba(255,255,255,0.8);
-  padding: 24px;
+  max-height: var(--info-frame-max-height);
+  background: var(--info-frame-bg);
+  border: var(--info-frame-border);
+  padding: var(--info-frame-padding);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -518,94 +603,328 @@
   text-align: center;
 }
 
+/* 🔧 Info Panel 타이포 */
 .info-title{
   margin: 0 0 16px 0;
-  font-size: 16px;
-  color: #ffffff;
+  font-size: var(--info-title-size);
+  color: var(--info-title-color);
   line-height: 1.3;
 }
 
 .info-text{
   margin: 0;
   font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
-  font-size: 12px;
-  color: var(--text-soft);
+  font-size: var(--info-text-size);
+  color: var(--info-text-color);
   line-height: 1.5;
 }
 
-/* Mobile responsive for panels */
-@media (max-width: 768px){
-  .work-panel-inner{
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 24px;
-    padding: 0 20px;
+/* 모바일 전용 닫기 버튼 (기본 숨김) */
+.mobile-only {
+  display: none;
+}
+
+/* =========================================
+   📱 Mobile Responsive Styles (max-width: 768px)
+   이미지 10, 11의 레이아웃을 구현하는 핵심 부분
+   ========================================= */
+@media (max-width: 768px) {
+  /* --- 기본 레이아웃 재정의 (이미지 11 구현) --- */
+
+  /* 2단 컬럼 해제 -> 1단으로 쭉 나열 */
+  .container {
+    display: block;
+    min-height: 100vh;
+    padding-bottom: 60px; /* 푸터 공간 확보 */
   }
 
-  .work-preview{
-    width: min(100%, calc(100vw - 40px));
-    aspect-ratio: 3 / 4;
+  .left-column, .right-column {
+    min-height: auto;
+    position: static; /* 고정 해제 */
   }
 
-  .work-cats{
-    margin-left: 0;
-    font-size: 14px;
+  .left-inner {
+    padding: 24px 20px;
+    min-height: auto;
+  }
+
+  /* 헤더 요소들을 세로로 배치 */
+  .site-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
+    flex-direction: column;
+    gap: 16px; /* 🔧 헤더 내부 요소 간 전체 간격: 이 값을 줄이면 타이틀과 설명, 메뉴 전체의 간격이 좁아집니다 */
   }
 
-  .work-cats .cat{
+  /* 🔧 모바일 전용 타이틀 수정 여기서 */
+  .site-title {
+    margin-top: 0;
+    font-size: var(--title-mobile-size);
+    transform: translate(var(--title-mobile-x), var(--title-mobile-y));
+  }
+
+  /* 🔧 타이틀 옆 설명 문구 (모바일) */
+  .welcome-msg {
+    font-size: var(--welcome-mobile-size) !important;
+    margin-top: 12px; /* 🔧 타이틀과 설명 간격 조정: 이 값을 줄이면 간격이 좁아집니다 */
+    transform: translate(var(--welcome-mobile-x), var(--welcome-mobile-y));
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* 🔧 dichotomiccc_smin과 gnb 메뉴 간격: 이 값을 줄이면 간격이 좁아집니다 */
+    margin-bottom: 40px;
+  }
+
+  .main-nav .persona-title {
+    font-size: var(--persona-mobile-size);
+    transform: translate(var(--persona-mobile-x), var(--persona-mobile-y));
+  }
+
+  .gnb {
+    font-size: var(--gnb-mobile-size);
+    transform: translate(var(--gnb-mobile-x), var(--gnb-mobile-y));
+  }
+
+  .gnb li {
+    margin-bottom: 4px; /* 🔧 works, about, contact 각 항목 간격: 이 값을 줄이면 간격이 좁아집니다 (기존 8px → 4px) */
+  }
+
+  /* Selected Works 목록 스타일 강화 (이미지 11처럼 크게) */
+  .selected-works {
+    transform: translate(var(--selected-mobile-x), var(--selected-mobile-y));
+  }
+
+  .selected-works .section-title {
+    font-size: var(--selected-mobile-title-size);
+    margin-bottom: 16px;
+    color: var(--hi);
+  }
+
+  .works-list {
+    font-size: var(--selected-mobile-list-size);
+    line-height: 1.1;
+  }
+
+  .works-list li {
+    margin-bottom: 12px;
+  }
+
+  .works-list a {
+    color: #AAAAAA; /* 기본 상태: #AAAAAA */
+    text-shadow: none; /* 빛나는 효과 제거 */
+  }
+
+  .works-list a:hover {
+    color: #FFFFFF; /* hover 시: #FFFFFF */
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.55),
+      0 0 14px rgba(255,255,255,0.25); /* hover 시만 빛나는 효과 */
+  }
+
+  /* Contact links를 selected work 아래에 표시 */
+  .left-column .contact-links {
+    display: flex;
+    position: static;
+    padding: 24px 0 12px 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  /* 데스크탑 우측 contact-links 숨김 */
+  .right-column {
+    display: none;
+  }
+
+  /* 푸터를 문서 흐름에 따라 최하단 배치 */
+  .site-footer {
+    position: static;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .copyright {
+    font-size: 9px;
+  }
+
+
+  /* --- 패널 스타일 재정의 (이미지 10 구현) --- */
+
+  /* 모든 패널을 전체 화면 고정에서 해제하고 메인 콘텐츠 영역에 덮어씌움 */
+  .work-panel,
+  .selected-work-panel,
+  .info-panel {
+    position: absolute; /* fixed -> absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg); /* 테마별 배경색 */
+    z-index: 100; /* 헤더보다 위로 */
+    padding: 24px 20px;
+    box-sizing: border-box;
+  }
+
+
+  /* 패널 내부 컨테이너 위치 초기화 */
+  .work-panel-inner,
+  .selected-work-panel-inner,
+  .info-panel-inner {
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    margin-top: 60px; /* 닫기 버튼 공간 확보 */
+  }
+
+  /* [이미지 참고] Work Panel 레이아웃 구현 */
+  .work-panel-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    gap: 24px;
+    padding-bottom: 40px; /* 하단 여백 */
+  }
+
+  /* 🔧 모바일 Work Panel 프레임 */
+  .work-preview {
+    width: var(--work-frame-mobile-width);
+    aspect-ratio: var(--work-frame-mobile-ratio);
+    background: var(--work-frame-mobile-bg);
+    border: var(--work-frame-mobile-border);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .work-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* 현재 카테고리 라벨 숨김 */
+  .current-cat-label {
+    display: none;
+  }
+
+  /* 카테고리 목록을 프레임 하단에 표시 */
+  .work-cats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-cats li {
     margin: 0;
   }
 
-  .selected-work-panel-inner{
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 20px;
-  }
-
-  .selected-work-preview{
-    width: min(100%, calc(100vw - 40px));
-    aspect-ratio: 3 / 4;
-  }
-
-  .info-panel-inner{
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 20px;
-  }
-
-  .info-box{
-    width: min(100%, calc(100vw - 40px));
-    aspect-ratio: 3 / 4;
-    padding: 20px;
-  }
-
-  .info-title{
+  .work-cats .cat {
     font-size: 14px;
+    color: #AAAAAA;
+    text-shadow: none;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(163, 163, 163, 0.3);
+    padding: 8px 16px;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
   }
 
-  .info-text{
-    font-size: 11px;
+  /* 화이트 테마에서 카테고리 버튼 스타일 */
+  body.theme-white .work-cats .cat {
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(26, 26, 26, 0.2);
   }
 
-  .easter-modal .modal-content{
-    width: calc(100vw - 40px);
-    padding: 18px;
+  body.theme-white .work-cats .cat.is-active {
+    color: #000000;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.4);
+    text-shadow:
+      0 0 6px rgba(0,0,0,0.3),
+      0 0 12px rgba(0,0,0,0.15);
   }
 
-  .modal-content .msg{
-    font-size: 12px;
-    line-height: 1.5;
+  body.theme-white .work-cats .cat:hover {
+    color: #000000;
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.3);
   }
 
-  .modal-content .hint{
-    font-size: 11px;
+  .work-cats .cat.is-active {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.55),
+      0 0 14px rgba(255,255,255,0.25);
+  }
+
+  .work-cats .cat:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.55),
+      0 0 14px rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* 🔧 모바일 Selected Work Panel & Info Panel 프레임 */
+  .selected-work-preview {
+    width: var(--selected-frame-mobile-width);
+    aspect-ratio: var(--selected-frame-mobile-ratio);
+    background: var(--selected-frame-mobile-bg);
+    border: var(--selected-frame-mobile-border);
+    overflow: hidden;
+  }
+
+  .info-box {
+    width: var(--info-frame-mobile-width);
+    aspect-ratio: var(--info-frame-mobile-ratio);
+    background: var(--info-frame-mobile-bg);
+    border: var(--info-frame-mobile-border);
+    padding: var(--info-frame-mobile-padding);
+  }
+
+  /* 🔧 모바일 Info Panel 타이포 */
+  .info-title {
+    font-size: var(--info-title-mobile-size);
+    color: var(--info-title-mobile-color);
+  }
+
+  .info-text {
+    font-size: var(--info-text-mobile-size);
+    color: var(--info-text-mobile-color);
+  }
+
+  /* 모바일 전용 닫기 버튼 표시 */
+  .mobile-only.close-panel-btn {
+    display: block;
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-soft);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px;
   }
 }

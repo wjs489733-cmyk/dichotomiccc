@@ -34,37 +34,78 @@ body.theme-default{
   --fg: var(--text-soft);
   --hi: var(--text-strong);
   --accent: var(--mint);
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #07090D;
+  --info-frame-border: 1px solid rgba(255, 255, 255, 0.8);
+  --info-title-color: #ffffff;
+  --info-text-color: #a3a3a3;
 }
+
 body.theme-white{
   --bg: #ffffff;
   --fg: #1a1a1a;
   --hi: #000000;
   --accent: #97E4D5;
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #ffffff;
+  --info-frame-border: 1px solid rgba(0, 0, 0, 0.3);
+  --info-title-color: #000000;
+  --info-text-color: #1a1a1a;
 }
+
 body.theme-black{
   --bg: #07090D;
   --fg: #a3a3a3;
   --hi: #ffffff;
   --accent: #97E4D5;
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #07090D;
+  --info-frame-border: 1px solid rgba(255, 255, 255, 0.8);
+  --info-title-color: #ffffff;
+  --info-text-color: #a3a3a3;
 }
+
 body.theme-mint{
   /* 타이포는 블랙 모드랑 동일 */
   --bg: #000000;
   --fg: #a3a3a3;
   --hi: #ffffff;
   --accent: #ffffff;
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #000000;
+  --info-frame-border: 1px solid rgba(151, 228, 213, 0.6);
+  --info-title-color: #97E4D5;
+  --info-text-color: #ffffff;
 }
+
 body.theme-red{
   --bg: #FE1804;
   --fg: #ffffff;
   --hi: #ffffff;
   --accent: #ffffff;
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #FE1804;
+  --info-frame-border: 1px solid rgba(255, 255, 255, 0.8);
+  --info-title-color: #ffffff;
+  --info-text-color: #ffffff;
 }
+
 body.theme-mint-bg{
   --bg: #97E4D5;
   --fg: #1a1a1a;
   --hi: #000000;
   --accent: #000000;
+
+  /* 🔧 Info Panel 테마별 색상 */
+  --info-frame-bg: #97E4D5;
+  --info-frame-border: 1px solid rgba(0, 0, 0, 0.3);
+  --info-title-color: #000000;
+  --info-text-color: #1a1a1a;
 }
 
 /* 민트 테마 전환 시 배경 이미지 페이드 효과 */
@@ -120,7 +161,56 @@ a:hover{ color: var(--hi); }
 }
 
 /* Mobile responsive adjustments */
-@media (max-width: 768px){
+/* ... (기존 스타일 유지) ... */
+
+@media (max-width: 768px) {
+  /* 이미지 0번 레이아웃: 기본 구조 */
+  .container { display: block; padding: 20px; }
+  .left-inner { padding: 0; }
+  
+  .site-header { display: block; }
+  .site-title { font-size: 48px; margin-bottom: 24px; }
+  .welcome-msg { font-size: 13px; margin-bottom: 32px; }
+  
+  .main-nav { display: block; margin-bottom: 60px; }
+  .persona-title { font-size: 20px; margin-bottom: 20px; }
+  .gnb { font-size: 18px; }
+  .gnb li { margin-bottom: 12px; }
+
+  /* 이미지 0번: Selected Work 리스트 강조 */
+  .selected-works .section-title { font-size: 18px; margin-bottom: 24px; color: #fff; }
+  .works-list { font-size: 44px; line-height: 1.1; }
+  .works-list li { margin-bottom: 16px; }
+
+  /* 이미지 2번: Work Panel 레이아웃 (청색 프레임) */
+  .work-panel.open { display: flex; align-items: center; justify-content: center; background: transparent; }
+  .work-panel-inner {
+    position: static; transform: none; display: grid;
+    grid-template-columns: 1.5fr 1fr; /* 이미지 6 : 리스트 4 */
+    gap: 15px; width: 100%; padding: 0 20px;
+  }
+
+  .work-preview {
+    width: 100%; aspect-ratio: 1 / 1.2;
+    background: #004272; /* 시안의 청색 프레임 */
+    border: none; position: relative;
+  }
+  
+  .current-cat-label {
+    display: block; position: absolute; top: 15px; left: 15px;
+    color: #fff; font-size: 16px; z-index: 2;
+  }
+
+  .work-cats { margin: 0; padding-top: 10px; font-size: 20px; }
+  .work-cats li { margin-bottom: 8px; }
+
+  /* 푸터 레이아웃 */
+  .contact-links {
+    position: static; display: flex; gap: 12px;
+    margin-top: 80px; font-size: 14px;
+  }
+  .site-footer { position: static; margin-top: 12px; }
+}@media (max-width: 768px){
   :root{
     --m: 20px;
   }

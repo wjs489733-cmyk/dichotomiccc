@@ -2,30 +2,9 @@
   // -------------------------
   // Theme switcher 테마 스위치
   // -------------------------
-  const THEME_KEY = "dichotomiccc_theme";
-  const THEME_CLASSES = [
-    "theme-default",
-    "theme-white",
-    "theme-black",
-    "theme-mint",
-    "theme-red",
-    "theme-mint-bg",
-  ];
-
   const themeBtn = document.querySelector(".theme-btn");
   const themeMenu = document.getElementById("themeMenu");
   const redThemeBtn = document.getElementById("redTheme");
-
-  function applyThemeClass(cls) {
-    document.body.classList.remove(...THEME_CLASSES);
-    document.body.classList.add(cls);
-  }
-
-  // 저장된 테마 복원 (easter용 theme-mint-bg도 포함)
-  const savedTheme = localStorage.getItem(THEME_KEY);
-  if (savedTheme && THEME_CLASSES.includes(savedTheme)) {
-    applyThemeClass(savedTheme);
-  }
 
   // 페이지 로드 시 해금 상태 확인
   if (redThemeBtn && localStorage.getItem("redThemeUnlocked") === "true") {
@@ -44,15 +23,21 @@
 
       const t = opt.dataset.theme;
 
-      // 테마 변경 + 저장
-      let cls = "theme-default";
-      if (t === "white") cls = "theme-white";
-      else if (t === "black") cls = "theme-black";
-      else if (t === "mint") cls = "theme-mint";
-      else if (t === "red") cls = "theme-red";
+      // 테마 변경 (CSS transition이 자동으로 부드럽게 처리)
+      document.body.classList.remove(
+        "theme-default",
+        "theme-white",
+        "theme-black",
+        "theme-mint",
+        "theme-red",
+        "theme-mint-bg"
+      );
 
-      applyThemeClass(cls);
-      localStorage.setItem(THEME_KEY, cls);
+      if (t === "white") document.body.classList.add("theme-white");
+      else if (t === "black") document.body.classList.add("theme-black");
+      else if (t === "mint") document.body.classList.add("theme-mint");
+      else if (t === "red") document.body.classList.add("theme-mint-bg");
+      else document.body.classList.add("theme-default");
 
       themeMenu.classList.remove("open");
     });
@@ -84,6 +69,7 @@
   const workImg = document.getElementById("workImg");
   const workCats = document.getElementById("workCats");
   const selectedWorkImg = document.getElementById("selectedWorkImg");
+  const currentCatLabel = document.querySelector(".current-cat-label");
 
   // gnb 링크들
   const worksLink = document.querySelector('.gnb a[href="#works"]');
@@ -151,6 +137,11 @@
     const btns = workCats.querySelectorAll(".cat");
     btns.forEach((b) => b.classList.toggle("is-active", b.dataset.cat === cat));
 
+    // 모바일용 카테고리 라벨 업데이트
+    if (currentCatLabel) {
+      currentCatLabel.textContent = cat;
+    }
+
     // 이미지 교체 (forceFirst면 첫 이미지, 아니면 다음 이미지)
     const list = WORKS[cat] || [];
     if (!list.length) return;
@@ -174,12 +165,12 @@
   }
 
   // works 클릭 시 패널 열기
-  if (worksLink) {
-    worksLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      openWorkPanel();
-    });
-  }
+if (worksLink) {
+  worksLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    openWorkPanel();
+  });
+}
 
   // about 클릭 시 패널 열기
   if (aboutLink) {
@@ -197,15 +188,31 @@
     });
   }
 
+  // 모바일 닫기 버튼 이벤트 연결
+  const closeBtns = document.querySelectorAll('.close-panel-btn');
+  closeBtns.forEach(btn => {
+    btn.addEventListener('click', closeAllPanels);
+  });
+
+
   // hover 시 해당 카테고리 "다음 이미지"로
   if (workCats) {
-    workCats.addEventListener("mouseover", (e) => {
+    workCats.addEventListener("click", (e) => { // 모바일 고려하여 mouseover -> click으로 변경 고려
       const btn = e.target.closest(".cat");
       if (!btn) return;
       const cat = btn.dataset.cat;
       if (!cat) return;
-
-      // hover하면 흰색(glow)은 CSS가 처리, 여기서는 이미지/active 처리
+      
+      // 클릭 시 활성화 및 이미지 교체
+      setActiveCat(cat, false);
+    });
+     // PC 호버 지원 유지
+    workCats.addEventListener("mouseover", (e) => {
+      if (window.innerWidth <= 768) return; // 모바일에서는 호버 무시
+      const btn = e.target.closest(".cat");
+      if (!btn) return;
+      const cat = btn.dataset.cat;
+      if (!cat) return;
       setActiveCat(cat, false);
     });
   }
@@ -222,32 +229,24 @@
     }
   });
 
-  // 바깥 클릭으로 닫기
-  if (workPanel) {
-    workPanel.addEventListener("click", (e) => {
-      // 패널 내부 클릭은 무시
-      if (e.target.closest(".work-panel-inner")) return;
-      closeAllPanels();
-    });
-  }
+  // 바깥 클릭으로 닫기 (모바일에서는 닫기 버튼이 있으므로 패널 배경 클릭 시 닫기)
+  [workPanel, aboutPanel, contactPanel, selectedWorkPanel].forEach(panel => {
+      if(panel) {
+          panel.addEventListener("click", (e) => {
+              // 패널 내부 콘텐츠나 닫기 버튼 클릭은 무시
+              if (e.target.closest(".work-panel-inner") || 
+                  e.target.closest(".info-panel-inner") || 
+                  e.target.closest(".selected-work-panel-inner") ||
+                  e.target.closest(".close-panel-btn")) return;
+              closeAllPanels();
+          });
+      }
+  });
 
-  if (aboutPanel) {
-    aboutPanel.addEventListener("click", (e) => {
-      if (e.target.closest(".info-panel-inner")) return;
-      closeAllPanels();
-    });
-  }
-
-  if (contactPanel) {
-    contactPanel.addEventListener("click", (e) => {
-      if (e.target.closest(".info-panel-inner")) return;
-      closeAllPanels();
-    });
-  }
 
   // -------------------------
   // Easter egg (3+ clicks)
-  // -------------------------
+  // (기존 코드와 동일)
   const personaTitle = document.getElementById("personaTitle");
   const modal = document.getElementById("easterModal");
 
@@ -305,13 +304,26 @@
   }
 
   function switchToMintBgTheme() {
-    applyThemeClass("theme-mint-bg");
-    localStorage.setItem(THEME_KEY, "theme-mint-bg");
+    document.body.classList.remove(
+      "theme-default",
+      "theme-white",
+      "theme-black",
+      "theme-mint",
+      "theme-red"
+    );
+    document.body.classList.add("theme-mint-bg");
   }
 
   function switchToBlackTheme() {
-    applyThemeClass("theme-black");
-    localStorage.setItem(THEME_KEY, "theme-black");
+    document.body.classList.remove(
+      "theme-default",
+      "theme-white",
+      "theme-black",
+      "theme-mint",
+      "theme-red",
+      "theme-mint-bg"
+    );
+    document.body.classList.add("theme-black");
   }
 
   if (personaTitle) {
@@ -388,11 +400,4 @@
     });
   });
 
-  // 패널 외부 클릭 시 닫기
-  if (selectedWorkPanel) {
-    selectedWorkPanel.addEventListener("click", (e) => {
-      if (e.target.closest(".selected-work-panel-inner")) return;
-      closeAllPanels();
-    });
-  }
 })();
