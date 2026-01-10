@@ -1,0 +1,159 @@
+/* ==========================================
+   갤러리 페이지 스타일
+   ========================================== */
+
+.gallery-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--m);
+  min-height: 100vh;
+}
+
+/* 헤더 */
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(163, 163, 163, 0.3);
+}
+
+.gallery-title {
+  font-size: 34px;
+  color: var(--hi);
+  margin: 0;
+}
+
+.back {
+  font-size: 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: var(--hi);
+}
+
+/* 갤러리 그리드 */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+  padding-bottom: 60px;
+}
+
+/* 갤러리 아이템 */
+.gallery-item {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+}
+
+.item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 이미지 컨테이너 */
+.item-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: rgba(163, 163, 163, 0.05);
+  border: 1px solid rgba(163, 163, 163, 0.2);
+  margin-bottom: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.gallery-item:hover .item-image {
+  border-color: rgba(163, 163, 163, 0.5);
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .item-image img {
+  opacity: 0.85;
+}
+
+/* 프로젝트 정보 */
+.item-info {
+  padding: 8px 0;
+}
+
+.item-title {
+  font-family: "Galmuri7", monospace;
+  font-size: 16px;
+  color: var(--hi);
+  margin: 0 0 6px 0;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.gallery-item:hover .item-title {
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.55),
+    0 0 14px rgba(255,255,255,0.25);
+}
+
+.item-year {
+  font-family: "Pretendard", sans-serif;
+  font-size: 12px;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .gallery-wrap {
+    padding: 24px 20px;
+  }
+
+  .gallery-header {
+    margin-bottom: 40px;
+  }
+
+  .gallery-title {
+    font-size: 24px;
+  }
+
+  .back {
+    font-size: 12px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .item-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .item-title {
+    font-size: 14px;
+  }
+
+  .item-year {
+    font-size: 11px;
+  }
+}
+
+/* 태블릿 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}

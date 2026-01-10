@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>about · dichotomiccc</title>
+  <title>Motion · dichotomiccc</title>
 
   <!-- Pretendard -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Galmuri -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css" />
 
-  <link rel="stylesheet" href="./assets/css/base.css" />
-  <link rel="stylesheet" href="./assets/css/about.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/gallery.css" />
 
   <!-- Vercel Web Analytics -->
   <script>
@@ -32,49 +32,41 @@
     </div>
   </div>
 
-  <main class="about-wrap">
-    <header class="about-header">
-      <h1 class="galmuri" id="aboutTitle" style="cursor: pointer;">about</h1>
-      <a class="back galmuri" href="#" id="backBtn">← back</a>
+  <main class="gallery-wrap">
+    <header class="gallery-header">
+      <h1 class="galmuri gallery-title">Motion</h1>
+      <a class="back galmuri" href="../index.html" id="backBtn">← back</a>
     </header>
 
-    <section class="about-card">
-      <h2 class="galmuri">min</h2>
-      <p>
-        시각디자인을 공부하며, 브랜딩·편집·UXUI·모션까지 폭넓게 실험하는 아카이브를 만들고 있다.
-        이 사이트는 프로젝트를 "작품"이 아니라 "과정"으로 남기기 위한 공간이다.
-      </p>
-      <ul>
-        <li>Focus: branding / editorial / uxui / graphic</li>
-        <li>Tools: Figma, Adobe CC, Cinema 4D, Web</li>
-        <li>Contact: <a href="mailto:wjs400@naver.com">wjs400@naver.com</a></li>
-      </ul>
-      <p class="note">텍스트/이미지 업데이트는 계속 진행 중이다.</p>
+    <!-- 갤러리 그리드 -->
+    <section class="gallery-grid">
+      <!-- 갤러리 아이템 예시 -->
+      <article class="gallery-item">
+        <a href="../projects/project-name-1.html" class="item-link">
+          <div class="item-image">
+            <img src="../assets/img/works/motion/01.jpg" alt="Project 1">
+          </div>
+          <div class="item-info">
+            <h2 class="item-title">Project Title 1</h2>
+            <p class="item-year">2024</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- 추가 프로젝트들 -->
+      <!-- 동일한 구조로 추가 -->
     </section>
   </main>
 
-  <script src="./js/home.js"></script>
+  <script src="../js/home.js"></script>
   <script>
-    // About 페이지 네비게이션
+    // Back 버튼 클릭 시 홈으로
     const backBtn = document.getElementById('backBtn');
-    const aboutTitle = document.getElementById('aboutTitle');
-
-    // back 버튼 클릭 시 인트로 페이지로 이동
     if (backBtn) {
       backBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // 인트로를 다시 보여주기 위해 localStorage 제거
-        localStorage.removeItem('introVisited');
-        window.location.href = './index.html';
-      });
-    }
-
-    // about 제목 클릭 시 홈페이지로 이동 (인트로 건너뛰기)
-    if (aboutTitle) {
-      aboutTitle.addEventListener('click', () => {
-        // 인트로를 건너뛰고 바로 홈으로
         localStorage.setItem('introVisited', 'true');
-        window.location.href = './index.html';
+        window.location.href = '../index.html';
       });
     }
   </script>

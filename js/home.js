@@ -1,4 +1,144 @@
 (() => {
+
+  // -------------------------
+  // 인트로 레이어
+  // -------------------------
+  const introLanding = document.getElementById('intro-landing');
+  const introUser = document.getElementById('introUser');
+  const introLogo = document.getElementById('introLogo');
+  const introHint = document.getElementById('introHint');
+  const clickCounter = document.getElementById('clickCounter');
+
+  let bgClickCount = 0;
+  let bgClickTimer = null;
+
+  // 인트로 종료 함수 (디졸브 효과)
+  function closeIntro() {
+    if (!introLanding) return;
+
+    // 페이드아웃 시작
+    introLanding.classList.add('fade-out');
+
+    // 애니메이션 완료 후 제거
+    setTimeout(() => {
+      introLanding.style.display = 'none';
+      introLanding.classList.remove('fade-out');
+      localStorage.setItem('introVisited', 'true');
+    }, 800);
+  }
+
+  // 재방문 체크 - 첫 방문 시에만 인트로 표시
+  if (introLanding) {
+    if (localStorage.getItem('introVisited') === 'true') {
+      introLanding.style.display = 'none';
+    } else {
+      // 첫 방문: 인트로 표시
+      introLanding.style.display = 'flex';
+    }
+  }
+
+  // 인트로 다시 열기 함수 (디졸브 효과)
+  function openIntro() {
+    if (!introLanding) return;
+
+    // 인트로 표시
+    introLanding.style.display = 'flex';
+    introLanding.classList.remove('fade-out');
+
+    // 클릭 카운터 초기화
+    bgClickCount = 0;
+    if (clickCounter) clickCounter.textContent = '';
+    if (introHint) introHint.classList.remove('active');
+  }
+
+  // 홈페이지 로고 클릭 시 인트로 다시 열기
+  const siteTitle = document.getElementById('siteTitle');
+  if (siteTitle) {
+    siteTitle.addEventListener('click', openIntro);
+
+    // 키보드 접근성
+    siteTitle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openIntro();
+      }
+    });
+  }
+
+  // 1. 'min' 클릭 시 about 페이지로 이동
+  if (introUser) {
+    introUser.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.location.href = 'about.html';
+    });
+
+    // 키보드 접근성
+    introUser.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = 'about.html';
+      }
+    });
+  }
+
+  // 2. 로고 클릭/Enter 시 인트로 종료
+  if (introLogo) {
+    introLogo.addEventListener('click', closeIntro);
+
+    // 키보드 접근성
+    introLogo.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeIntro();
+      }
+    });
+  }
+
+  // 3. 바탕 3번 클릭 시 인트로 종료
+  if (introLanding) {
+    introLanding.addEventListener('click', (e) => {
+      // 로고나 min 버튼 클릭은 제외
+      if (e.target !== introLanding && !e.target.closest('.pixel-animation-container')) {
+        return;
+      }
+
+      bgClickCount++;
+
+      // 클릭 카운터 업데이트
+      if (clickCounter) {
+        clickCounter.textContent = `${bgClickCount}/3`;
+      }
+
+      // 힌트 강조
+      if (introHint) {
+        introHint.classList.add('active');
+      }
+
+      // 타이머 초기화 (2.2초 내에 3번 클릭해야 함)
+      clearTimeout(bgClickTimer);
+      bgClickTimer = setTimeout(() => {
+        bgClickCount = 0;
+        if (clickCounter) clickCounter.textContent = '';
+        if (introHint) introHint.classList.remove('active');
+      }, 2200);
+
+      // 3번 클릭 완료
+      if (bgClickCount >= 3) {
+        clearTimeout(bgClickTimer);
+        closeIntro();
+        bgClickCount = 0;
+      }
+    });
+  }
+
+  // 4. ESC 키로 인트로 건너뛰기
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && introLanding && introLanding.style.display !== 'none') {
+      closeIntro();
+    }
+  });
+
   // -------------------------
   // Theme switcher 테마 스위치
   // -------------------------
@@ -195,18 +335,9 @@ if (worksLink) {
   });
 
 
-  // hover 시 해당 카테고리 "다음 이미지"로
+  // 카테고리 버튼 동작
   if (workCats) {
-    workCats.addEventListener("click", (e) => { // 모바일 고려하여 mouseover -> click으로 변경 고려
-      const btn = e.target.closest(".cat");
-      if (!btn) return;
-      const cat = btn.dataset.cat;
-      if (!cat) return;
-      
-      // 클릭 시 활성화 및 이미지 교체
-      setActiveCat(cat, false);
-    });
-     // PC 호버 지원 유지
+    // PC 호버: 프리뷰 이미지 변경
     workCats.addEventListener("mouseover", (e) => {
       if (window.innerWidth <= 768) return; // 모바일에서는 호버 무시
       const btn = e.target.closest(".cat");
@@ -214,6 +345,17 @@ if (worksLink) {
       const cat = btn.dataset.cat;
       if (!cat) return;
       setActiveCat(cat, false);
+    });
+
+    // 클릭: 해당 카테고리 갤러리 페이지로 이동
+    workCats.addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat");
+      if (!btn) return;
+      const cat = btn.dataset.cat;
+      if (!cat) return;
+
+      // 카테고리 갤러리 페이지로 이동
+      window.location.href = `./works/${cat}.html`;
     });
   }
 
@@ -341,7 +483,7 @@ if (worksLink) {
 
       clickCount += 1;
 
-      if (clickCount >= 3) {
+      if (clickCount >= 5) {
         togglePersonaLabel();
 
         if (currentMode === "illustration") {
@@ -376,14 +518,26 @@ if (worksLink) {
   });
 
   // -------------------------
-  // Selected Work 프로젝트 클릭 시 이미지 표시
+  // Selected Work 프로젝트 호버 프리뷰 및 클릭 시 상세 페이지 이동
   // -------------------------
   const selectedWorkLinks = document.querySelectorAll(".works-list a");
+  let selectedProjectName = null;
+  let isPanelOpenForProject = false;
 
   selectedWorkLinks.forEach((link) => {
+    // 클릭 시: 첫 클릭은 패널 열기, 두 번째 클릭은 페이지 이동
     link.addEventListener("click", (e) => {
       e.preventDefault();
       const projectName = link.getAttribute("href").substring(1); // #ddd -> ddd
+
+      // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
+      if (isPanelOpenForProject && selectedProjectName === projectName) {
+        window.location.href = `./projects/${projectName}.html`;
+        return;
+      }
+
+      // 첫 클릭: 패널 열기
+      selectedProjectName = projectName;
 
       // 이미지 경로 설정
       if (selectedWorkImg) {
@@ -396,8 +550,105 @@ if (worksLink) {
       if (selectedWorkPanel) {
         selectedWorkPanel.classList.add("open");
         selectedWorkPanel.setAttribute("aria-hidden", "false");
+        isPanelOpenForProject = true;
       }
     });
+  });
+
+  // 패널 이미지 클릭 시 상세 페이지로 이동
+  if (selectedWorkImg) {
+    selectedWorkImg.addEventListener("click", () => {
+      if (selectedProjectName) {
+        window.location.href = `./projects/${selectedProjectName}.html`;
+      }
+    });
+  }
+
+  // 패널이 닫힐 때 상태 초기화
+  const originalCloseAllPanels = closeAllPanels;
+  closeAllPanels = function() {
+    originalCloseAllPanels();
+    isPanelOpenForProject = false;
+  };
+
+  // -------------------------
+  // History 키워드 감지 (타이핑으로 'history' 입력 시 모달 표시)
+  // -------------------------
+  const historyModal = document.getElementById('historyModal');
+  const historyCloseBtn = document.getElementById('historyCloseBtn');
+  const historyOkBtn = document.getElementById('historyOkBtn');
+
+  let typedKeys = '';
+  let typingTimer = null;
+
+  function openHistoryModal() {
+    if (historyModal) {
+      historyModal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeHistoryModal() {
+    if (historyModal) {
+      historyModal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  // 키 입력 감지
+  document.addEventListener('keydown', (e) => {
+    // 입력 필드에 포커스가 있으면 무시
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      return;
+    }
+
+    // 특수키나 Ctrl/Cmd 조합은 무시
+    if (e.ctrlKey || e.metaKey || e.altKey || e.key.length > 1) {
+      return;
+    }
+
+    // 타이핑된 키 추가
+    typedKeys += e.key.toLowerCase();
+
+    // 타이머 초기화 (1.5초 동안 입력 없으면 리셋)
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      typedKeys = '';
+    }, 1500);
+
+    // 'history' 감지
+    if (typedKeys.includes('history')) {
+      openHistoryModal();
+      typedKeys = ''; // 리셋
+    }
+
+    // 너무 길어지면 앞부분 제거 (메모리 절약)
+    if (typedKeys.length > 20) {
+      typedKeys = typedKeys.slice(-10);
+    }
+  });
+
+  // 닫기 버튼
+  if (historyCloseBtn) {
+    historyCloseBtn.addEventListener('click', closeHistoryModal);
+  }
+
+  if (historyOkBtn) {
+    historyOkBtn.addEventListener('click', closeHistoryModal);
+  }
+
+  // 배경 클릭으로 닫기
+  if (historyModal) {
+    historyModal.addEventListener('click', (e) => {
+      if (e.target === historyModal) {
+        closeHistoryModal();
+      }
+    });
+  }
+
+  // ESC로 닫기
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && historyModal && historyModal.getAttribute('aria-hidden') === 'false') {
+      closeHistoryModal();
+    }
   });
 
 })();

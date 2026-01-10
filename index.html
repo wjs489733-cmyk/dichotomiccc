@@ -19,6 +19,20 @@
 </head>
 
 <body class="theme-default">
+  <!-- 인트로 레이어 -->
+  <div id="intro-landing" class="intro-layer galmuri" role="dialog" aria-label="intro landing">
+    <header class="intro-header">
+      <button class="intro-logo" id="introLogo" aria-label="로고 클릭하여 홈으로 이동">
+        dichotomiccc
+      </button>
+      <button class="intro-user" id="introUser" aria-label="min 클릭하여 about 페이지로 이동">min</button>
+    </header>
+
+    <div class="pixel-animation-container">
+      <img src="./assets/img/pixel-seed.gif" alt="fluttering seed" class="pixel-seed-art" id="pixelSeedImg">
+    </div>
+  </div>
+
   <div class="theme-switcher" id="themeSwitcher" aria-label="theme switcher">
     <button class="theme-btn" id="themeBtn" aria-label="테마 열기"></button>
     <div class="theme-menu" id="themeMenu" aria-label="theme menu">
@@ -34,7 +48,7 @@
       <div class="left-inner">
 
         <header class="site-header">
-          <h1 class="site-title galmuri">dichotomiccc</h1>
+          <h1 class="site-title galmuri" id="siteTitle" role="button" tabindex="0">dichotomiccc</h1>
       
           <div class="header-right">
             <div class="welcome-msg">
@@ -173,6 +187,39 @@
 
       <div class="hint">
         (click anywhere to close)
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+  <div class="history-modal" id="historyModal" aria-hidden="true">
+    <div class="history-window galmuri" role="dialog" aria-modal="true" aria-label="update history">
+      <div class="history-titlebar">
+        <span class="history-title">Update History</span>
+        <button class="history-close" id="historyCloseBtn" aria-label="Close">×</button>
+      </div>
+      <div class="history-content">
+        <div class="history-item">
+          <span class="history-log">update_26_01_11_project detail page system</span>
+        </div>
+        <div class="history-item">
+          <span class="history-log">update_26_01_11_gallery page system</span>
+        </div>
+        <div class="history-item">
+          <span class="history-log">update_26_01_11_intro landing page</span>
+        </div>
+        <div class="history-item">
+          <span class="history-log">update_26_01_10_selected work section</span>
+        </div>
+        <div class="history-item">
+          <span class="history-log">update_26_01_10_theme system</span>
+        </div>
+        <div class="history-item">
+          <span class="history-log">update_26_01_09_basic layout design</span>
+        </div>
+      </div>
+      <div class="history-footer">
+        <button class="history-ok-btn" id="historyOkBtn">OK</button>
       </div>
     </div>
   </div>

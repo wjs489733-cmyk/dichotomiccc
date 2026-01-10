@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THEVOIS · dichotomiccc</title>
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Galmuri -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css" />
+
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/project.css" />
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body class="theme-default">
+  <!-- Theme Switcher -->
+  <div class="theme-switcher" id="themeSwitcher" aria-label="theme switcher">
+    <button class="theme-btn" id="themeBtn" aria-label="테마 열기"></button>
+    <div class="theme-menu" id="themeMenu" aria-label="theme menu">
+      <button class="theme-option white" data-theme="white" aria-label="화이트 테마"></button>
+      <button class="theme-option black" data-theme="black" aria-label="블랙 테마"></button>
+      <button class="theme-option mint" data-theme="mint" aria-label="민트 테마"></button>
+      <button class="theme-option red hidden" data-theme="red" aria-label="레드 테마" id="redTheme"></button>
+    </div>
+  </div>
+
+  <main class="project-wrap">
+    <header class="project-header">
+      <h1 class="galmuri project-title">THEVOIS</h1>
+      <a class="back galmuri" href="../index.html" id="backBtn">← back</a>
+    </header>
+
+    <article class="project-content">
+      <!-- 프로젝트 메타 정보 -->
+      <section class="project-meta">
+        <div class="meta-item">
+          <span class="meta-label">Category</span>
+          <span class="meta-value">Branding / UXUI</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Year</span>
+          <span class="meta-value">2024</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tools</span>
+          <span class="meta-value">Figma, Adobe Illustrator</span>
+        </div>
+      </section>
+
+      <!-- 프로젝트 설명 -->
+      <section class="project-description">
+        <h2>Project Overview</h2>
+        <p>
+          THEVOIS 프로젝트에 대한 설명이 들어갑니다.
+          프로젝트의 배경, 목적, 과정 등을 상세히 작성할 수 있습니다.
+        </p>
+      </section>
+
+      <!-- 이미지 갤러리 -->
+      <section class="project-gallery">
+        <figure class="gallery-item">
+          <img src="../assets/img/selected/thevois.jpg" alt="THEVOIS Project Image 1">
+          <figcaption>프로젝트 대표 이미지</figcaption>
+        </figure>
+
+        <!-- 추가 이미지들 -->
+        <!-- <figure class="gallery-item">
+          <img src="../assets/img/projects/thevois/02.jpg" alt="THEVOIS Project Image 2">
+          <figcaption>이미지 설명</figcaption>
+        </figure> -->
+      </section>
+
+      <!-- 프로젝트 상세 내용 -->
+      <section class="project-detail">
+        <h2>Detail</h2>
+        <p>
+          프로젝트의 상세한 내용, 디자인 결정 사항, 사용된 기술 등을 작성합니다.
+        </p>
+      </section>
+    </article>
+
+    <!-- 네비게이션: 이전/다음 프로젝트 -->
+    <nav class="project-nav">
+      <a href="./ddd.html" class="nav-prev galmuri">← prev</a>
+      <a href="./aurevo.html" class="nav-next galmuri">next →</a>
+    </nav>
+  </main>
+
+  <script src="../js/home.js"></script>
+  <script>
+    // Back 버튼 클릭 시 홈으로
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.setItem('introVisited', 'true');
+        window.location.href = '../index.html';
+      });
+    }
+  </script>
+</body>
+</html>
