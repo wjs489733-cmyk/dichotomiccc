@@ -88,14 +88,29 @@ const projectSchema = new mongoose.Schema({
   }
 });
 
-// slug 자동 생성 미들웨어
-projectSchema.pre('save', function(next) {
-  if (this.isModified('title') && !this.slug) {
-    this.slug = this.title
+// slug 자동 생성 미들웨어 (validation 전에 실행)
+projectSchema.pre('validate', function(next) {
+  if (this.title && !this.slug) {
+    // 타이틀에서 slug 생성 (영문, 숫자, 하이픈만 허용)
+    let baseSlug = this.title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+      .replace(/[^a-z0-9가-힣]+/g, '-')
+      .replace(/[가-힣]/g, '') // 한글 제거
+      .replace(/(^-|-$)/g, '')
+      .replace(/-+/g, '-'); // 연속 하이픈 제거
+
+    // slug가 비어있으면 타임스탬프 사용
+    if (!baseSlug) {
+      baseSlug = 'project-' + Date.now();
+    }
+
+    this.slug = baseSlug;
   }
+  next();
+});
+
+// 업데이트 시간 자동 갱신
+projectSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });

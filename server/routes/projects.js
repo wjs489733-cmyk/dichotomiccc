@@ -100,6 +100,35 @@ router.get('/admin/all', auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/projects/admin/:id
+// @desc    Get single project by ID for admin (including unpublished)
+// @access  Private
+router.get('/admin/:id', auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate('createdBy', 'email')
+      .populate('updatedBy', 'email');
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: project
+    });
+  } catch (error) {
+    console.error('Get project by ID error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+});
+
 // @route   POST /api/projects
 // @desc    Create new project
 // @access  Private

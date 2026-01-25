@@ -388,6 +388,407 @@
   margin-bottom: 24px;
 }
 
+/* ==========================================
+   Editor Page
+   ========================================== */
+
+.admin-editor-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.editor-main {
+  max-width: 900px;
+}
+
+.editor-header {
+  margin-bottom: 32px;
+}
+
+.editor-header .back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.editor-section {
+  background: rgba(7, 9, 13, 0.6);
+  border: 1px solid rgba(163, 163, 163, 0.2);
+  padding: 24px;
+}
+
+.section-title {
+  font-size: 14px;
+  color: var(--hi);
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(163, 163, 163, 0.15);
+}
+
+.form-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group-large {
+  flex: 2;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(163, 163, 163, 0.05);
+  border: 1px solid rgba(163, 163, 163, 0.2);
+  color: var(--hi);
+  font-family: "Pretendard", system-ui, sans-serif;
+  font-size: 14px;
+  transition: all 0.2s;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a3a3a3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.form-select:focus {
+  border-color: rgba(163, 163, 163, 0.5);
+  background-color: rgba(163, 163, 163, 0.08);
+}
+
+.form-select option {
+  background: #07090D;
+  color: var(--hi);
+}
+
+/* Thumbnail Upload */
+.thumbnail-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.thumbnail-preview {
+  width: 200px;
+  height: 267px; /* 3:4 ratio */
+  background: rgba(163, 163, 163, 0.05);
+  border: 2px dashed rgba(163, 163, 163, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.thumbnail-preview:hover {
+  border-color: rgba(163, 163, 163, 0.5);
+  background: rgba(163, 163, 163, 0.08);
+}
+
+.thumbnail-preview.has-image {
+  border-style: solid;
+  border-color: rgba(163, 163, 163, 0.3);
+}
+
+.thumbnail-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-placeholder {
+  font-family: "Galmuri7", monospace;
+  font-size: 11px;
+  color: var(--text-soft);
+}
+
+.btn-upload {
+  padding: 10px 20px;
+  background: rgba(163, 163, 163, 0.1);
+  border: 1px solid rgba(163, 163, 163, 0.3);
+  color: var(--text-soft);
+  font-family: "Galmuri7", monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-upload:hover {
+  background: rgba(163, 163, 163, 0.2);
+  border-color: rgba(163, 163, 163, 0.5);
+  color: var(--hi);
+}
+
+.upload-hint {
+  font-size: 10px;
+  color: var(--text-soft);
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Gallery Upload */
+.gallery-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  background: rgba(163, 163, 163, 0.05);
+  border: 1px solid rgba(163, 163, 163, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 59, 48, 0.9);
+  border: none;
+  color: white;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.gallery-item:hover .gallery-remove {
+  opacity: 1;
+}
+
+.gallery-add {
+  aspect-ratio: 1;
+  background: rgba(163, 163, 163, 0.05);
+  border: 2px dashed rgba(163, 163, 163, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 120px;
+}
+
+.gallery-add:hover {
+  border-color: rgba(163, 163, 163, 0.5);
+  background: rgba(163, 163, 163, 0.08);
+}
+
+.gallery-add span {
+  font-size: 32px;
+  color: var(--text-soft);
+  opacity: 0.5;
+}
+
+/* Quill Editor Customization */
+.editor-wrapper {
+  background: rgba(163, 163, 163, 0.05);
+  border: 1px solid rgba(163, 163, 163, 0.2);
+}
+
+.ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(163, 163, 163, 0.05);
+}
+
+.ql-container.ql-snow {
+  border: none;
+  min-height: 250px;
+  font-family: "Pretendard", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.ql-editor {
+  color: var(--hi);
+  line-height: 1.6;
+}
+
+.ql-editor.ql-blank::before {
+  color: rgba(163, 163, 163, 0.4);
+  font-style: normal;
+}
+
+.ql-snow .ql-stroke {
+  stroke: var(--text-soft);
+}
+
+.ql-snow .ql-fill {
+  fill: var(--text-soft);
+}
+
+.ql-snow .ql-picker {
+  color: var(--text-soft);
+}
+
+.ql-snow .ql-picker-options {
+  background: #07090D;
+  border-color: rgba(163, 163, 163, 0.3);
+}
+
+.ql-snow .ql-picker-item:hover {
+  color: var(--hi);
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  border-color: rgba(163, 163, 163, 0.3);
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  border-color: rgba(163, 163, 163, 0.3);
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active {
+  color: var(--hi);
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow .ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: var(--hi);
+}
+
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: var(--hi);
+}
+
+/* Settings Checkboxes */
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(163, 163, 163, 0.4);
+  background: rgba(163, 163, 163, 0.05);
+  position: relative;
+  transition: all 0.2s;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background: rgba(151, 228, 213, 0.2);
+  border-color: #97E4D5;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 4px;
+  height: 8px;
+  border: solid #97E4D5;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-label:hover .checkbox-custom {
+  border-color: rgba(163, 163, 163, 0.6);
+}
+
+/* Editor Actions */
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(163, 163, 163, 0.15);
+}
+
+.btn-cancel {
+  padding: 12px 32px;
+  background: transparent;
+  border: 1px solid rgba(163, 163, 163, 0.3);
+  color: var(--text-soft);
+  font-family: "Galmuri7", monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  border-color: rgba(163, 163, 163, 0.5);
+  color: var(--hi);
+}
+
+.btn-save {
+  padding: 12px 32px;
+  background: rgba(151, 228, 213, 0.15);
+  border: 1px solid rgba(151, 228, 213, 0.4);
+  color: #97E4D5;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: rgba(151, 228, 213, 0.25);
+  border-color: rgba(151, 228, 213, 0.6);
+}
+
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-header {
@@ -409,5 +810,22 @@
 
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .editor-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
