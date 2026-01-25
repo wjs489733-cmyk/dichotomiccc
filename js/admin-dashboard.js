@@ -136,7 +136,7 @@
 
   // 프로젝트 보기
   window.viewProject = (slug) => {
-    window.open(`../projects/${slug}.html`, '_blank');
+    window.open(`../projects/view.html?slug=${slug}`, '_blank');
   };
 
   // 프로젝트 삭제
