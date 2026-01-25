@@ -1,1 +1,6 @@
 assets/img/pixel-seed.gif
+
+# Server
+server/.env
+server/node_modules/
+node_modules/

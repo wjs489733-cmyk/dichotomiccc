@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Dichotomiccc Admin</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin-dashboard">
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <a href="./dashboard.html" class="admin-header-logo galmuri">dichotomiccc</a>
+      <nav>
+        <ul class="admin-nav galmuri">
+          <li><a href="./dashboard.html" class="active">Projects</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="admin-header-right">
+      <span class="admin-user galmuri" id="userEmail"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <h1 class="admin-title galmuri">Projects</h1>
+
+    <div class="admin-actions">
+      <a href="./editor.html" class="btn-new-project">+ New Project</a>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projectsContainer">
+      <div class="empty-state">
+        <div class="empty-state-icon">⏳</div>
+        <p class="empty-state-text">Loading projects...</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/admin-dashboard.js"></script>
+</body>
+</html>

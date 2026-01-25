@@ -461,6 +461,7 @@
   inset: 0;
   display: none;
   z-index: 40; /* theme-switcher(50)보다 아래, footer(5)보다 위 */
+  pointer-events: none; /* 배경 클릭 가능하도록 */
 }
 
 .work-panel.open{ display: block; }
@@ -474,6 +475,7 @@
   grid-template-columns: auto auto;
   column-gap: var(--work-panel-gap);
   align-items: start;
+  pointer-events: auto; /* 내용은 클릭 가능 */
 }
 
 /* 🔧 데스크탑 Work Panel 프레임 */
@@ -550,6 +552,7 @@
   inset: 0;
   display: none;
   z-index: 40;
+  pointer-events: none; /* 배경 클릭 가능하도록 */
 }
 
 .selected-work-panel.open{ display: block; }
@@ -560,6 +563,7 @@
   top: var(--selected-frame-top);
   left: var(--selected-frame-left);
   transform: translateX(var(--selected-frame-transform-x));
+  pointer-events: auto; /* 내용은 클릭 가능 */
 }
 
 .selected-work-preview{
@@ -591,6 +595,7 @@
   inset: 0;
   display: none;
   z-index: 40;
+  pointer-events: none; /* 배경 클릭 가능하도록 */
 }
 
 .info-panel.open{ display: block; }
@@ -601,6 +606,7 @@
   top: var(--info-frame-top);
   left: var(--info-frame-left);
   transform: translateX(var(--info-frame-transform-x));
+  pointer-events: auto; /* 내용은 클릭 가능 */
 }
 
 .info-box{

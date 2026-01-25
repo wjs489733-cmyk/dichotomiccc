@@ -371,20 +371,6 @@ if (worksLink) {
     }
   });
 
-  // 바깥 클릭으로 닫기 (모바일에서는 닫기 버튼이 있으므로 패널 배경 클릭 시 닫기)
-  [workPanel, aboutPanel, contactPanel, selectedWorkPanel].forEach(panel => {
-      if(panel) {
-          panel.addEventListener("click", (e) => {
-              // 패널 내부 콘텐츠나 닫기 버튼 클릭은 무시
-              if (e.target.closest(".work-panel-inner") || 
-                  e.target.closest(".info-panel-inner") || 
-                  e.target.closest(".selected-work-panel-inner") ||
-                  e.target.closest(".close-panel-btn")) return;
-              closeAllPanels();
-          });
-      }
-  });
-
 
   // -------------------------
   // Easter egg (3+ clicks)
@@ -525,7 +511,7 @@ if (worksLink) {
   let isPanelOpenForProject = false;
 
   selectedWorkLinks.forEach((link) => {
-    // 클릭 시: 첫 클릭은 패널 열기, 두 번째 클릭은 페이지 이동
+    // 클릭 시: 첫 클릭은 패널 열기, 같은 프로젝트 재클릭은 페이지 이동
     link.addEventListener("click", (e) => {
       e.preventDefault();
       const projectName = link.getAttribute("href").substring(1); // #ddd -> ddd
@@ -536,7 +522,7 @@ if (worksLink) {
         return;
       }
 
-      // 첫 클릭: 패널 열기
+      // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
       selectedProjectName = projectName;
 
       // 이미지 경로 설정
@@ -545,8 +531,12 @@ if (worksLink) {
         selectedWorkImg.alt = projectName;
       }
 
+      // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
+      if (!isPanelOpenForProject) {
+        closeAllPanels();
+      }
+
       // 패널 열기
-      closeAllPanels();
       if (selectedWorkPanel) {
         selectedWorkPanel.classList.add("open");
         selectedWorkPanel.setAttribute("aria-hidden", "false");
@@ -617,6 +607,12 @@ if (worksLink) {
     // 'history' 감지
     if (typedKeys.includes('history')) {
       openHistoryModal();
+      typedKeys = ''; // 리셋
+    }
+
+    // 'admin' 감지 - 관리자 로그인 페이지로 이동
+    if (typedKeys.includes('admin')) {
+      window.location.href = './admin/login.html';
       typedKeys = ''; // 리셋
     }
 
