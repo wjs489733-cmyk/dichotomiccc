@@ -38,27 +38,17 @@
       <a class="back galmuri" href="../index.html" id="backBtn">← back</a>
     </header>
 
-    <!-- 갤러리 그리드 -->
+    <!-- 갤러리 그리드 - API에서 동적으로 로드됨 -->
     <section class="gallery-grid">
-      <!-- 갤러리 아이템 예시 -->
-      <article class="gallery-item">
-        <a href="../projects/project-name-1.html" class="item-link">
-          <div class="item-image">
-            <img src="../assets/img/works/motion/01.jpg" alt="Project 1">
-          </div>
-          <div class="item-info">
-            <h2 class="item-title">Project Title 1</h2>
-            <p class="item-year">2024</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- 추가 프로젝트들 -->
-      <!-- 동일한 구조로 추가 -->
+      <div class="loading-state">
+        <p class="galmuri">Loading projects...</p>
+      </div>
     </section>
   </main>
 
   <script src="../js/home.js"></script>
+  <script src="../js/works.js"></script>
+  <script src="../js/admin-float.js"></script>
   <script>
     // Back 버튼 클릭 시 홈으로
     const backBtn = document.getElementById('backBtn');

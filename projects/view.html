@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editorial · dichotomiccc</title>
+  <title>Project · dichotomiccc</title>
 
   <!-- Pretendard -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css" />
 
   <link rel="stylesheet" href="../assets/css/base.css" />
-  <link rel="stylesheet" href="../assets/css/gallery.css" />
+  <link rel="stylesheet" href="../assets/css/project.css" />
 
   <!-- Vercel Web Analytics -->
   <script>
@@ -32,33 +32,27 @@
     </div>
   </div>
 
-  <main class="gallery-wrap">
-    <header class="gallery-header">
-      <h1 class="galmuri gallery-title">Editorial</h1>
+  <main class="project-wrap">
+    <header class="project-header">
+      <h1 class="galmuri project-title" id="projectTitle">Loading...</h1>
       <a class="back galmuri" href="../index.html" id="backBtn">← back</a>
     </header>
 
-    <!-- 갤러리 그리드 - API에서 동적으로 로드됨 -->
-    <section class="gallery-grid">
+    <article class="project-content" id="projectContent">
+      <!-- 로딩 상태 -->
       <div class="loading-state">
-        <p class="galmuri">Loading projects...</p>
+        <p class="galmuri">Loading project...</p>
       </div>
-    </section>
+    </article>
+
+    <!-- 네비게이션: 카테고리로 돌아가기 -->
+    <nav class="project-nav" id="projectNav" style="display: none;">
+      <a href="#" class="nav-prev galmuri" id="categoryLink">← back to category</a>
+    </nav>
   </main>
 
   <script src="../js/home.js"></script>
-  <script src="../js/works.js"></script>
+  <script src="../js/project-view.js"></script>
   <script src="../js/admin-float.js"></script>
-  <script>
-    // Back 버튼 클릭 시 홈으로
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-      backBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.setItem('introVisited', 'true');
-        window.location.href = '../index.html';
-      });
-    }
-  </script>
 </body>
 </html>
