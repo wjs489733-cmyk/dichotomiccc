@@ -21,41 +21,76 @@
 </head>
 
 <body class="theme-default">
-  <!-- Theme Switcher -->
-  <div class="theme-switcher" id="themeSwitcher" aria-label="theme switcher">
-    <button class="theme-btn" id="themeBtn" aria-label="테마 열기"></button>
-    <div class="theme-menu" id="themeMenu" aria-label="theme menu">
-      <button class="theme-option white" data-theme="white" aria-label="화이트 테마"></button>
-      <button class="theme-option black" data-theme="black" aria-label="블랙 테마"></button>
-      <button class="theme-option mint" data-theme="mint" aria-label="민트 테마"></button>
-      <button class="theme-option red hidden" data-theme="red" aria-label="레드 테마" id="redTheme"></button>
-    </div>
-  </div>
-
   <main class="about-wrap">
     <header class="about-header">
       <h1 class="galmuri" id="aboutTitle" style="cursor: pointer;">about</h1>
       <a class="back galmuri" href="#" id="backBtn">← back</a>
     </header>
 
-    <section class="about-card">
-      <h2 class="galmuri">min</h2>
-      <p>
+    <section class="about-card" id="aboutContent">
+      <h2 class="galmuri" id="profileName">min</h2>
+      <p id="profileBio">
         시각디자인을 공부하며, 브랜딩·편집·UXUI·모션까지 폭넓게 실험하는 아카이브를 만들고 있다.
         이 사이트는 프로젝트를 "작품"이 아니라 "과정"으로 남기기 위한 공간이다.
       </p>
-      <ul>
-        <li>Focus: branding / editorial / uxui / graphic</li>
-        <li>Tools: Figma, Adobe CC, Cinema 4D, Web</li>
-        <li>Contact: <a href="mailto:wjs400@naver.com">wjs400@naver.com</a></li>
+      <ul id="profileInfo">
+        <li>Focus: <span id="profileFocus">branding / editorial / uxui / graphic</span></li>
+        <li>Tools: <span id="profileTools">Figma, Adobe CC, Cinema 4D, Web</span></li>
+        <li>Contact: <a href="mailto:wjs400@naver.com" id="contactEmail">wjs400@naver.com</a></li>
       </ul>
+      <div id="additionalContent"></div>
       <p class="note">텍스트/이미지 업데이트는 계속 진행 중이다.</p>
     </section>
   </main>
 
+  <script src="./js/config.js"></script>
   <script src="./js/home.js"></script>
   <script src="./js/admin-float.js"></script>
   <script>
+    const API_URL = CONFIG.API_URL;
+
+    // API에서 About 페이지 데이터 로드
+    async function loadAboutPage() {
+      try {
+        const response = await fetch(`${API_URL}/pages/about`);
+        if (!response.ok) return;
+
+        const result = await response.json();
+        const page = result.data;
+
+        if (page.profile) {
+          if (page.profile.name) {
+            document.getElementById('profileName').textContent = page.profile.name;
+          }
+          if (page.profile.bio) {
+            document.getElementById('profileBio').textContent = page.profile.bio;
+          }
+          if (page.profile.focus) {
+            document.getElementById('profileFocus').textContent = page.profile.focus;
+          }
+          if (page.profile.tools) {
+            document.getElementById('profileTools').textContent = page.profile.tools;
+          }
+        }
+
+        if (page.contactInfo && page.contactInfo.email) {
+          const emailEl = document.getElementById('contactEmail');
+          emailEl.textContent = page.contactInfo.email;
+          emailEl.href = `mailto:${page.contactInfo.email}`;
+        }
+
+        if (page.content && page.content.trim() !== '' && page.content !== '<p><br></p>') {
+          document.getElementById('additionalContent').innerHTML = page.content;
+        }
+
+      } catch (error) {
+        console.log('Using default about content');
+      }
+    }
+
+    // 페이지 로드 시 데이터 가져오기
+    loadAboutPage();
+
     // About 페이지 네비게이션
     const backBtn = document.getElementById('backBtn');
     const aboutTitle = document.getElementById('aboutTitle');

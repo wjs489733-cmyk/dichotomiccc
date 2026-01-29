@@ -3,8 +3,8 @@
  * URL 파라미터의 slug로 프로젝트 상세 정보를 가져와 렌더링
  */
 (() => {
-  // API URL - 로컬 개발용 (배포 시 변경 필요)
-  const API_URL = 'http://localhost:5000/api';
+  // API URL - CONFIG에서 자동 결정
+  const API_URL = CONFIG.API_URL;
 
   // URL에서 slug 추출
   const urlParams = new URLSearchParams(window.location.search);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Dichotomiccc Admin</title>
+  <title>Selected Works - Dichotomiccc Admin</title>
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
@@ -14,7 +14,8 @@
       <a href="./dashboard.html" class="admin-header-logo galmuri">dichotomiccc</a>
       <nav>
         <ul class="admin-nav galmuri">
-          <li><a href="./dashboard.html" class="active">Projects</a></li>
+          <li><a href="./dashboard.html">Projects</a></li>
+          <li><a href="./selected-dashboard.html" class="active">Selected Work</a></li>
           <li><a href="./page-editor.html?page=about">Pages</a></li>
           <li><a href="../index.html" target="_blank">View Site ↗</a></li>
         </ul>
@@ -28,22 +29,22 @@
 
   <!-- Main Content -->
   <main class="admin-main">
-    <h1 class="admin-title galmuri">Projects</h1>
+    <h1 class="admin-title galmuri">Selected Works</h1>
 
     <div class="admin-actions">
-      <a href="./editor.html" class="btn-new-project">+ New Project</a>
+      <a href="./selected-editor.html" class="btn-new-project">+ New Selected Work</a>
     </div>
 
-    <!-- Projects Grid -->
-    <div id="projectsContainer">
+    <!-- Selected Works Grid -->
+    <div id="selectedWorksContainer">
       <div class="empty-state">
         <div class="empty-state-icon">⏳</div>
-        <p class="empty-state-text">Loading projects...</p>
+        <p class="empty-state-text">Loading selected works...</p>
       </div>
     </div>
   </main>
 
   <script src="../js/config.js"></script>
-  <script src="../js/admin-dashboard.js"></script>
+  <script src="../js/admin-selected-dashboard.js"></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
  * API에서 프로젝트를 가져와 카테고리별로 렌더링
  */
 (() => {
-  // API URL - 로컬 개발용 (배포 시 변경 필요)
-  const API_URL = 'http://localhost:5000/api';
+  // API URL - CONFIG에서 자동 결정
+  const API_URL = CONFIG.API_URL;
 
   // 현재 페이지의 카테고리 추출
   const path = window.location.pathname;

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selected Work Editor - Dichotomiccc Admin</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <!-- Quill.js WYSIWYG Editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+</head>
+<body class="admin-editor-page">
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <a href="./dashboard.html" class="admin-header-logo galmuri">dichotomiccc</a>
+      <nav>
+        <ul class="admin-nav galmuri">
+          <li><a href="./dashboard.html">Projects</a></li>
+          <li><a href="./selected-dashboard.html" class="active">Selected Work</a></li>
+          <li><a href="./page-editor.html?page=about">Pages</a></li>
+          <li><a href="../index.html" target="_blank">View Site ↗</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="admin-header-right">
+      <span class="admin-user galmuri" id="userEmail"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main editor-main">
+    <div class="editor-header">
+      <a href="./selected-dashboard.html" class="back-link galmuri">&larr; Back to Selected Works</a>
+      <h1 class="admin-title galmuri" id="pageTitle">New Selected Work</h1>
+    </div>
+
+    <form id="selectedWorkForm" class="editor-form">
+      <!-- Basic Info -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Basic Information</h2>
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="title" class="galmuri">Title * <span class="hint">(홈 화면에 표시되는 이름)</span></label>
+            <input type="text" id="title" name="title" class="form-input" placeholder="ddd" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="displayTitle" class="galmuri">Display Title <span class="hint">(상세 페이지 제목)</span></label>
+            <input type="text" id="displayTitle" name="displayTitle" class="form-input" placeholder="DDD">
+          </div>
+          <div class="form-group">
+            <label for="slug" class="galmuri">Slug * <span class="hint">(URL용 - 영문 소문자)</span></label>
+            <input type="text" id="slug" name="slug" class="form-input" placeholder="ddd" required>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meta Info -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Meta Information</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category" class="galmuri">Category *</label>
+            <input type="text" id="category" name="category" class="form-input" placeholder="Branding / UXUI" required>
+          </div>
+          <div class="form-group">
+            <label for="year" class="galmuri">Year *</label>
+            <input type="text" id="year" name="year" class="form-input" placeholder="2024" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="tools" class="galmuri">Tools</label>
+            <input type="text" id="tools" name="tools" class="form-input" placeholder="Figma, Adobe Illustrator">
+          </div>
+        </div>
+      </section>
+
+      <!-- Thumbnail -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Thumbnail * <span class="hint">(홈 화면 프리뷰 이미지)</span></h2>
+        <div class="thumbnail-upload">
+          <div class="thumbnail-preview" id="thumbnailPreview">
+            <span class="upload-placeholder">Click to upload</span>
+          </div>
+          <input type="file" id="thumbnailInput" accept="image/*" hidden>
+          <button type="button" class="btn-upload" id="thumbnailBtn">Upload Image</button>
+          <p class="upload-hint galmuri">Recommended: 3:4 ratio, min 600px width</p>
+        </div>
+      </section>
+
+      <!-- Overview -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Project Overview</h2>
+        <div class="editor-wrapper">
+          <div id="overviewEditor"></div>
+        </div>
+      </section>
+
+      <!-- Gallery Images -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Gallery Images</h2>
+        <div class="gallery-upload">
+          <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be added here -->
+            <div class="gallery-add" id="galleryAddBtn">
+              <span>+</span>
+            </div>
+          </div>
+          <input type="file" id="galleryInput" accept="image/*" multiple hidden>
+          <p class="upload-hint galmuri">이미지를 여러 개 업로드할 수 있습니다. 드래그해서 순서를 변경하세요.</p>
+        </div>
+      </section>
+
+      <!-- Detail -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Detail</h2>
+        <div class="editor-wrapper">
+          <div id="detailEditor"></div>
+        </div>
+      </section>
+
+      <!-- Navigation -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Navigation <span class="hint">(이전/다음 프로젝트)</span></h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prevSlug" class="galmuri">Previous Project Slug</label>
+            <input type="text" id="prevSlug" name="prevSlug" class="form-input" placeholder="iptime_re">
+          </div>
+          <div class="form-group">
+            <label for="prevTitle" class="galmuri">Previous Project Title</label>
+            <input type="text" id="prevTitle" name="prevTitle" class="form-input" placeholder="iptime_re">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nextSlug" class="galmuri">Next Project Slug</label>
+            <input type="text" id="nextSlug" name="nextSlug" class="form-input" placeholder="thevois">
+          </div>
+          <div class="form-group">
+            <label for="nextTitle" class="galmuri">Next Project Title</label>
+            <input type="text" id="nextTitle" name="nextTitle" class="form-input" placeholder="thevois">
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Settings</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="order" class="galmuri">Display Order</label>
+            <input type="number" id="order" name="order" class="form-input" placeholder="0" value="0">
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="published" name="published" checked>
+            <span class="checkbox-custom"></span>
+            <span class="galmuri">Published (Visible to public)</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="editor-actions">
+        <button type="button" class="btn-delete" id="deleteBtn" style="display: none;">Delete</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='./selected-dashboard.html'">Cancel</button>
+        <button type="submit" class="btn-save galmuri" id="saveBtn">
+          <span class="btn-text">Save Selected Work</span>
+          <span class="btn-loading" style="display: none;">Saving...</span>
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Quill.js -->
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/admin-selected-editor.js"></script>
+</body>
+</html>

@@ -1,9 +1,13 @@
+/**
+ * Admin Selected Works Dashboard
+ * Selected Work 목록 관리
+ */
 (() => {
   const API_URL = CONFIG.API_URL;
 
   const userEmail = document.getElementById('userEmail');
   const logoutBtn = document.getElementById('logoutBtn');
-  const projectsContainer = document.getElementById('projectsContainer');
+  const selectedWorksContainer = document.getElementById('selectedWorksContainer');
 
   // 인증 확인
   const token = localStorage.getItem('authToken');
@@ -40,7 +44,6 @@
     });
 
     if (response.status === 401) {
-      // 토큰 만료
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       window.location.href = './login.html';
@@ -56,18 +59,18 @@
     return data;
   }
 
-  // 프로젝트 목록 불러오기
-  async function loadProjects() {
+  // Selected Works 목록 불러오기
+  async function loadSelectedWorks() {
     try {
-      const response = await apiRequest('/projects/admin/all');
-      const projects = response.data;
+      const response = await apiRequest('/selected-works/admin/all');
+      const works = response.data;
 
-      if (projects.length === 0) {
-        projectsContainer.innerHTML = `
+      if (works.length === 0) {
+        selectedWorksContainer.innerHTML = `
           <div class="empty-state">
             <div class="empty-state-icon">📁</div>
-            <p class="empty-state-text">No projects yet. Create your first project!</p>
-            <a href="./editor.html" class="btn-new-project">+ New Project</a>
+            <p class="empty-state-text">No selected works yet. Create your first one!</p>
+            <a href="./selected-editor.html" class="btn-new-project">+ New Selected Work</a>
           </div>
         `;
         return;
@@ -76,89 +79,87 @@
       const grid = document.createElement('div');
       grid.className = 'projects-grid';
 
-      projects.forEach(project => {
-        const card = createProjectCard(project);
+      works.forEach(work => {
+        const card = createWorkCard(work);
         grid.appendChild(card);
       });
 
-      projectsContainer.innerHTML = '';
-      projectsContainer.appendChild(grid);
+      selectedWorksContainer.innerHTML = '';
+      selectedWorksContainer.appendChild(grid);
 
     } catch (error) {
-      console.error('Load projects error:', error);
-      projectsContainer.innerHTML = `
+      console.error('Load selected works error:', error);
+      selectedWorksContainer.innerHTML = `
         <div class="empty-state">
           <div class="empty-state-icon">❌</div>
-          <p class="empty-state-text">Failed to load projects</p>
+          <p class="empty-state-text">Failed to load selected works</p>
           <button class="btn-new-project" onclick="location.reload()">Retry</button>
         </div>
       `;
     }
   }
 
-  // 프로젝트 카드 생성
-  function createProjectCard(project) {
+  // Selected Work 카드 생성
+  function createWorkCard(work) {
     const card = document.createElement('div');
     card.className = 'project-card';
 
     // 상태 뱃지
     let statusBadge = '';
-    if (project.isFeatured) {
-      statusBadge = '<span class="project-status-badge featured">Featured</span>';
-    } else if (project.isPublished) {
+    if (work.published) {
       statusBadge = '<span class="project-status-badge published">Published</span>';
     } else {
       statusBadge = '<span class="project-status-badge draft">Draft</span>';
     }
 
     // 썸네일
-    const thumbUrl = project.thumbnail?.url || '../assets/img/placeholder.jpg';
+    const thumbUrl = work.thumbnail?.url || '../assets/img/placeholder.jpg';
 
     card.innerHTML = `
       ${statusBadge}
       <div class="project-card-thumb">
-        <img src="${thumbUrl}" alt="${project.title}" onerror="this.src='../assets/img/placeholder.jpg'">
+        <img src="${thumbUrl}" alt="${work.title}" onerror="this.src='../assets/img/placeholder.jpg'">
       </div>
-      <h3 class="project-card-title">${project.title}</h3>
+      <h3 class="project-card-title">${work.displayTitle || work.title}</h3>
       <div class="project-card-meta">
-        <span>${project.category}</span>
-        <span>${project.year}</span>
+        <span>${work.category}</span>
+        <span>${work.year}</span>
       </div>
       <div class="project-card-actions">
-        <a href="./editor.html?id=${project._id}" class="btn-small">Edit</a>
-        <button class="btn-small" onclick="window.viewProject('${project.slug}')">View</button>
-        <button class="btn-small btn-danger" onclick="window.deleteProject('${project._id}', '${project.title}')">Delete</button>
+        <a href="./selected-editor.html?id=${work._id}" class="btn-small">Edit</a>
+        <button class="btn-small" onclick="window.viewSelectedWork('${work.slug}')">View</button>
+        <button class="btn-small btn-danger" onclick="window.deleteSelectedWork('${work._id}', '${work.title}')">Delete</button>
       </div>
     `;
 
     return card;
   }
 
-  // 프로젝트 보기
-  window.viewProject = (slug) => {
-    window.open(`../projects/view.html?slug=${slug}`, '_blank');
+  // Selected Work 보기
+  window.viewSelectedWork = (slug) => {
+    window.open(`../projects/${slug}.html`, '_blank');
   };
 
-  // 프로젝트 삭제
-  window.deleteProject = async (id, title) => {
+  // Selected Work 삭제
+  window.deleteSelectedWork = async (id, title) => {
     if (!confirm(`Are you sure you want to delete "${title}"?`)) {
       return;
     }
 
     try {
-      await apiRequest(`/projects/${id}`, {
+      await apiRequest(`/selected-works/${id}`, {
         method: 'DELETE'
       });
 
-      alert('Project deleted successfully');
-      loadProjects(); // 목록 새로고침
+      alert('Selected work deleted successfully');
+      loadSelectedWorks(); // 목록 새로고침
     } catch (error) {
-      console.error('Delete project error:', error);
-      alert('Failed to delete project: ' + error.message);
+      console.error('Delete selected work error:', error);
+      alert('Failed to delete: ' + error.message);
     }
   };
 
   // 초기 로드
-  loadProjects();
+  loadSelectedWorks();
 
 })();

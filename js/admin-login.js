@@ -1,5 +1,5 @@
 (() => {
-  const API_URL = 'http://localhost:5000/api'; // 개발 환경 URL
+  const API_URL = CONFIG.API_URL;
 
   const loginForm = document.getElementById('loginForm');
   const emailInput = document.getElementById('email');

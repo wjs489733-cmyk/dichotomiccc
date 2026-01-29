@@ -1,6 +1,11 @@
 (() => {
 
   // -------------------------
+  // API 설정
+  // -------------------------
+  const API_URL = CONFIG.API_URL;
+
+  // -------------------------
   // 인트로 레이어
   // -------------------------
   const introLanding = document.getElementById('intro-landing');
@@ -151,6 +156,20 @@
     redThemeBtn.classList.remove("hidden");
   }
 
+  // 페이지 로드 시 저장된 테마 적용
+  const savedTheme = localStorage.getItem("siteTheme");
+  if (savedTheme) {
+    document.body.classList.remove(
+      "theme-default",
+      "theme-white",
+      "theme-black",
+      "theme-mint",
+      "theme-red",
+      "theme-mint-bg"
+    );
+    document.body.classList.add(savedTheme);
+  }
+
   if (themeBtn && themeMenu) {
     themeBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -173,11 +192,16 @@
         "theme-mint-bg"
       );
 
-      if (t === "white") document.body.classList.add("theme-white");
-      else if (t === "black") document.body.classList.add("theme-black");
-      else if (t === "mint") document.body.classList.add("theme-mint");
-      else if (t === "red") document.body.classList.add("theme-mint-bg");
-      else document.body.classList.add("theme-default");
+      let themeClass = "theme-default";
+      if (t === "white") themeClass = "theme-white";
+      else if (t === "black") themeClass = "theme-black";
+      else if (t === "mint") themeClass = "theme-mint";
+      else if (t === "red") themeClass = "theme-mint-bg";
+
+      document.body.classList.add(themeClass);
+
+      // 테마를 localStorage에 저장
+      localStorage.setItem("siteTheme", themeClass);
 
       themeMenu.classList.remove("open");
     });
@@ -216,17 +240,61 @@
   const aboutLink = document.querySelector('.gnb a[href="about.html"]');
   const contactLink = document.querySelector('.gnb a[href="#contact"]');
 
-  const WORKS = {
-    uxui: ["./assets/img/works/uxui/01.jpg", "./assets/img/works/uxui/02.jpg"],
-    branding: ["./assets/img/works/branding/01.jpg", "./assets/img/works/branding/02.jpg"],
-    editorial: ["./assets/img/works/editorial/01.jpg"],
-    graphic: ["./assets/img/works/graphic/01.jpg"],
-    motion: ["./assets/img/works/motion/01.jpg"],
-    etc: ["./assets/img/works/etc/01.jpg"],
+  // 기본 폴백 이미지 (API 로드 전 또는 실패 시) - url과 slug 포함
+  const DEFAULT_WORKS = {
+    uxui: [{ url: "./assets/img/works/uxui/01.jpg", slug: null }],
+    branding: [{ url: "./assets/img/works/branding/01.jpg", slug: null }],
+    editorial: [{ url: "./assets/img/works/editorial/01.jpg", slug: null }],
+    graphic: [{ url: "./assets/img/works/graphic/01.jpg", slug: null }],
+    motion: [{ url: "./assets/img/works/motion/01.jpg", slug: null }],
+    etc: [{ url: "./assets/img/works/etc/01.jpg", slug: null }],
   };
+
+  // 동적으로 업데이트될 WORKS 객체 (url과 slug 포함)
+  let WORKS = JSON.parse(JSON.stringify(DEFAULT_WORKS));
+
+  // 현재 표시 중인 프로젝트 정보
+  let currentProject = { url: null, slug: null, category: null };
 
   const idx = { uxui: 0, branding: 0, editorial: 0, graphic: 0, motion: 0, etc: 0 };
   let activeCat = "uxui";
+
+  // API에서 카테고리별 최신 썸네일 가져오기
+  async function loadCategoryThumbnails() {
+    const categories = ['uxui', 'branding', 'editorial', 'graphic', 'motion', 'etc'];
+
+    for (const category of categories) {
+      try {
+        const response = await fetch(`${API_URL}/projects?category=${category}&published=true&limit=5`);
+        if (!response.ok) continue;
+
+        const result = await response.json();
+        const projects = result.data || [];
+
+        if (projects.length > 0) {
+          // 썸네일 URL과 slug 배열 생성
+          const projectItems = projects
+            .filter(p => p.thumbnail?.url)
+            .map(p => ({ url: p.thumbnail.url, slug: p.slug }));
+
+          if (projectItems.length > 0) {
+            WORKS[category] = projectItems;
+          }
+        }
+      } catch (error) {
+        console.log(`Failed to load thumbnails for ${category}:`, error);
+        // 실패 시 기본 이미지 유지
+      }
+    }
+
+    // 현재 활성 카테고리 이미지 업데이트 (패널이 열려있는 경우)
+    if (workPanel && workPanel.classList.contains('open')) {
+      setActiveCat(activeCat, true);
+    }
+  }
+
+  // 페이지 로드 시 썸네일 로드
+  loadCategoryThumbnails();
 
   // 모든 패널 닫기
   function closeAllPanels() {
@@ -289,7 +357,9 @@
     if (forceFirst) idx[cat] = 0;
     else idx[cat] = (idx[cat] + 1) % list.length;
 
-    swapImg(list[idx[cat]]);
+    const item = list[idx[cat]];
+    currentProject = { url: item.url, slug: item.slug, category: cat };
+    swapImg(item.url);
   }
 
   function swapImg(src) {
@@ -302,6 +372,20 @@
       // 캐시로 onload 안 불릴 때 대비
       setTimeout(() => (workImg.style.opacity = "1"), 60);
     }, 160);
+  }
+
+  // 작품 이미지 클릭 시 해당 프로젝트 페이지로 이동
+  if (workImg) {
+    workImg.style.cursor = "pointer";
+    workImg.addEventListener("click", () => {
+      if (currentProject.slug) {
+        // 프로젝트 상세 페이지로 이동
+        window.location.href = `./projects/view.html?slug=${currentProject.slug}`;
+      } else if (currentProject.category) {
+        // slug가 없으면 카테고리 갤러리 페이지로 이동
+        window.location.href = `./works/${currentProject.category}.html`;
+      }
+    });
   }
 
   // works 클릭 시 패널 열기

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Editor - Dichotomiccc Admin</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <!-- Quill.js WYSIWYG Editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+</head>
+<body class="admin-editor-page">
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <a href="./dashboard.html" class="admin-header-logo galmuri">dichotomiccc</a>
+      <nav>
+        <ul class="admin-nav galmuri">
+          <li><a href="./dashboard.html">Projects</a></li>
+          <li><a href="./page-editor.html?page=about" class="active">Pages</a></li>
+          <li><a href="../index.html" target="_blank">View Site ↗</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="admin-header-right">
+      <span class="admin-user galmuri" id="userEmail"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main editor-main">
+    <div class="editor-header">
+      <a href="./dashboard.html" class="back-link galmuri">&larr; Back to Dashboard</a>
+      <h1 class="admin-title galmuri" id="pageTitle">Edit Page</h1>
+    </div>
+
+    <!-- Page Selector -->
+    <div class="page-selector">
+      <button class="page-tab galmuri" data-page="about">About</button>
+      <button class="page-tab galmuri" data-page="contact">Contact</button>
+    </div>
+
+    <form id="pageForm" class="editor-form">
+      <!-- Basic Info -->
+      <section class="editor-section">
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="title" class="galmuri">Page Title</label>
+            <input type="text" id="title" name="title" class="form-input" placeholder="Enter page title">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="subtitle" class="galmuri">Subtitle</label>
+            <input type="text" id="subtitle" name="subtitle" class="form-input" placeholder="Enter subtitle">
+          </div>
+        </div>
+      </section>
+
+      <!-- About Profile Section (about 페이지 전용) -->
+      <section class="editor-section" id="profileSection">
+        <h2 class="section-title galmuri">Profile Information</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profileName" class="galmuri">Name</label>
+            <input type="text" id="profileName" name="profileName" class="form-input" placeholder="min">
+          </div>
+          <div class="form-group">
+            <label for="profileFocus" class="galmuri">Focus</label>
+            <input type="text" id="profileFocus" name="profileFocus" class="form-input" placeholder="branding / editorial / uxui / graphic">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="profileTools" class="galmuri">Tools</label>
+            <input type="text" id="profileTools" name="profileTools" class="form-input" placeholder="Figma, Adobe CC, Cinema 4D, Web">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group-large">
+            <label for="profileBio" class="galmuri">Bio</label>
+            <textarea id="profileBio" name="profileBio" class="form-input form-textarea" rows="4" placeholder="Enter bio"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Info Section -->
+      <section class="editor-section" id="contactSection">
+        <h2 class="section-title galmuri">Contact Information</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactEmail" class="galmuri">Email</label>
+            <input type="email" id="contactEmail" name="contactEmail" class="form-input" placeholder="wjs400@naver.com">
+          </div>
+          <div class="form-group">
+            <label for="contactInstagram" class="galmuri">Instagram URL</label>
+            <input type="url" id="contactInstagram" name="contactInstagram" class="form-input" placeholder="https://instagram.com/dichotomiccc">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactBlog" class="galmuri">Blog URL</label>
+            <input type="url" id="contactBlog" name="contactBlog" class="form-input" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label for="contactOther" class="galmuri">Other</label>
+            <input type="text" id="contactOther" name="contactOther" class="form-input" placeholder="Other contact info">
+          </div>
+        </div>
+      </section>
+
+      <!-- Additional Content -->
+      <section class="editor-section">
+        <h2 class="section-title galmuri">Additional Content</h2>
+        <div class="editor-wrapper">
+          <div id="quillEditor"></div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="editor-actions">
+        <button type="button" class="btn-cancel" onclick="window.location.href='./dashboard.html'">Cancel</button>
+        <button type="submit" class="btn-save galmuri" id="saveBtn">
+          <span class="btn-text">Save Page</span>
+          <span class="btn-loading" style="display: none;">Saving...</span>
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Quill.js -->
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/admin-page-editor.js"></script>
+</body>
+</html>
