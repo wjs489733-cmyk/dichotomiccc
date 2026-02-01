@@ -46,39 +46,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   GET /api/projects/:slug
-// @desc    Get single project by slug
-// @access  Public
-router.get('/:slug', async (req, res) => {
-  try {
-    const project = await Project.findOne({
-      slug: req.params.slug,
-      isPublished: true
-    }).select('-createdBy -updatedBy');
-
-    if (!project) {
-      return res.status(404).json({
-        success: false,
-        message: 'Project not found'
-      });
-    }
-
-    res.json({
-      success: true,
-      data: project
-    });
-  } catch (error) {
-    console.error('Get project error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error'
-    });
-  }
-});
-
 // @route   GET /api/projects/admin/all
 // @desc    Get all projects (including unpublished) for admin
 // @access  Private
+// NOTE: This route must be defined BEFORE /:slug to avoid "admin" being matched as a slug
 router.get('/admin/all', auth, async (req, res) => {
   try {
     const projects = await Project.find()
@@ -103,6 +74,7 @@ router.get('/admin/all', auth, async (req, res) => {
 // @route   GET /api/projects/admin/:id
 // @desc    Get single project by ID for admin (including unpublished)
 // @access  Private
+// NOTE: This route must be defined BEFORE /:slug to avoid "admin" being matched as a slug
 router.get('/admin/:id', auth, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
@@ -122,6 +94,37 @@ router.get('/admin/:id', auth, async (req, res) => {
     });
   } catch (error) {
     console.error('Get project by ID error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+});
+
+// @route   GET /api/projects/:slug
+// @desc    Get single project by slug
+// @access  Public
+// NOTE: This wildcard route must be defined AFTER specific routes like /admin/all and /admin/:id
+router.get('/:slug', async (req, res) => {
+  try {
+    const project = await Project.findOne({
+      slug: req.params.slug,
+      isPublished: true
+    }).select('-createdBy -updatedBy');
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: project
+    });
+  } catch (error) {
+    console.error('Get project error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error'

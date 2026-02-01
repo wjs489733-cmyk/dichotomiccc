@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/pages', require('./routes/pages'));
+app.use('/api/selected-works', require('./routes/selected-works'));
 
 // Health check
 app.get('/api/health', (req, res) => {
