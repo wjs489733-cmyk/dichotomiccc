@@ -622,92 +622,98 @@ if (worksLink) {
   // -------------------------
   // Selected Work 프로젝트 호버 프리뷰 및 클릭 시 상세 페이지 이동
   // -------------------------
-  const worksList = document.querySelector(".works-list");
-  let selectedWorkData = []; // API에서 로드된 Selected Work 데이터
+  const selectedWorkLinks = document.querySelectorAll(".works-list a");
+  let selectedWorkDataMap = {}; // slug -> API 데이터 매핑
   let selectedProjectSlug = null;
-  let selectedProjectThumbnail = null;
   let isPanelOpenForProject = false;
 
-  // API에서 Selected Works 로드
-  async function loadSelectedWorks() {
+  // API에서 Selected Works 로드하고 썸네일 데이터만 업데이트
+  async function loadSelectedWorksData() {
     try {
       const response = await fetch(`${API_URL}/selected-works?published=true`);
       if (!response.ok) return;
 
       const result = await response.json();
-      selectedWorkData = result.data || [];
+      const works = result.data || [];
 
-      // 리스트 업데이트
-      if (worksList && selectedWorkData.length > 0) {
-        worksList.innerHTML = '';
-        selectedWorkData.forEach(work => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = `#${work.slug}`;
-          a.textContent = work.title;
-          a.dataset.slug = work.slug;
-          a.dataset.thumbnail = work.thumbnail?.url || '';
-          li.appendChild(a);
-          worksList.appendChild(li);
-        });
+      // slug를 키로 하는 맵 생성
+      works.forEach(work => {
+        selectedWorkDataMap[work.slug] = work;
+      });
 
-        // 이벤트 리스너 재설정
-        setupSelectedWorkLinks();
-      }
+      // 기존 링크에 썸네일 데이터 추가
+      selectedWorkLinks.forEach(link => {
+        const slug = link.getAttribute("href").substring(1); // #ddd -> ddd
+        const workData = selectedWorkDataMap[slug];
+        if (workData && workData.thumbnail?.url) {
+          link.dataset.thumbnail = workData.thumbnail.url;
+          link.dataset.hasApiData = 'true';
+        }
+      });
     } catch (error) {
-      console.log('Failed to load selected works:', error);
+      console.log('Failed to load selected works data:', error);
     }
   }
 
-  function setupSelectedWorkLinks() {
-    const links = document.querySelectorAll(".works-list a");
+  // 페이지 로드 시 Selected Works 데이터 로드
+  loadSelectedWorksData();
 
-    links.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const slug = link.dataset.slug || link.getAttribute("href").substring(1);
-        const thumbnail = link.dataset.thumbnail;
+  selectedWorkLinks.forEach((link) => {
+    // 클릭 시: 첫 클릭은 패널 열기, 같은 프로젝트 재클릭은 페이지 이동
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const slug = link.getAttribute("href").substring(1); // #ddd -> ddd
+      const thumbnail = link.dataset.thumbnail;
+      const hasApiData = link.dataset.hasApiData === 'true';
 
-        // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
-        if (isPanelOpenForProject && selectedProjectSlug === slug) {
-          window.location.href = `./projects/view.html?slug=${slug}`;
-          return;
+      // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
+      if (isPanelOpenForProject && selectedProjectSlug === slug) {
+        // API 데이터가 있으면 selected-work 뷰 페이지로, 없으면 정적 페이지로
+        if (hasApiData) {
+          window.location.href = `./selected/view.html?slug=${slug}`;
+        } else {
+          window.location.href = `./projects/${slug}.html`;
         }
+        return;
+      }
 
-        // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
-        selectedProjectSlug = slug;
-        selectedProjectThumbnail = thumbnail;
+      // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
+      selectedProjectSlug = slug;
 
-        // 이미지 경로 설정 (API 썸네일 또는 폴백)
-        if (selectedWorkImg) {
-          if (thumbnail) {
-            selectedWorkImg.src = thumbnail;
-          } else {
-            selectedWorkImg.src = `./assets/img/selected/${slug}.jpg`;
-          }
-          selectedWorkImg.alt = slug;
+      // 이미지 경로 설정 (API 썸네일 우선, 폴백은 정적 이미지)
+      if (selectedWorkImg) {
+        if (thumbnail) {
+          selectedWorkImg.src = thumbnail;
+        } else {
+          selectedWorkImg.src = `./assets/img/selected/${slug}.jpg`;
         }
+        selectedWorkImg.alt = slug;
+      }
 
-        // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
-        if (!isPanelOpenForProject) {
-          closeAllPanels();
-        }
+      // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
+      if (!isPanelOpenForProject) {
+        closeAllPanels();
+      }
 
-        // 패널 열기
-        if (selectedWorkPanel) {
-          selectedWorkPanel.classList.add("open");
-          selectedWorkPanel.setAttribute("aria-hidden", "false");
-          isPanelOpenForProject = true;
-        }
-      });
+      // 패널 열기
+      if (selectedWorkPanel) {
+        selectedWorkPanel.classList.add("open");
+        selectedWorkPanel.setAttribute("aria-hidden", "false");
+        isPanelOpenForProject = true;
+      }
     });
-  }
+  });
 
   // 패널 이미지 클릭 시 상세 페이지로 이동
   if (selectedWorkImg) {
     selectedWorkImg.addEventListener("click", () => {
       if (selectedProjectSlug) {
-        window.location.href = `./projects/view.html?slug=${selectedProjectSlug}`;
+        const hasApiData = selectedWorkDataMap[selectedProjectSlug];
+        if (hasApiData) {
+          window.location.href = `./selected/view.html?slug=${selectedProjectSlug}`;
+        } else {
+          window.location.href = `./projects/${selectedProjectSlug}.html`;
+        }
       }
     });
   }
@@ -718,9 +724,6 @@ if (worksLink) {
     originalCloseAllPanels();
     isPanelOpenForProject = false;
   };
-
-  // 페이지 로드 시 Selected Works 로드
-  loadSelectedWorks();
 
   // -------------------------
   // History 키워드 감지 (타이핑으로 'history' 입력 시 모달 표시)
