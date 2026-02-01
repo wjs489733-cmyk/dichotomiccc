@@ -137,7 +137,7 @@
 
   // Selected Work 보기
   window.viewSelectedWork = (slug) => {
-    window.open(`../projects/${slug}.html`, '_blank');
+    window.open(`../selected/view.html?slug=${slug}`, '_blank');
   };
 
   // Selected Work 삭제
