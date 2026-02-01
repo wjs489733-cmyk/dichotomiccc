@@ -6,30 +6,130 @@
   const API_URL = CONFIG.API_URL;
 
   // -------------------------
-  // 인트로 레이어
+  // 인트로 레이어 (레트로 부팅 화면)
   // -------------------------
   const introLanding = document.getElementById('intro-landing');
-  const introUser = document.getElementById('introUser');
-  const introLogo = document.getElementById('introLogo');
-  const introHint = document.getElementById('introHint');
-  const clickCounter = document.getElementById('clickCounter');
+  const bootLog = document.getElementById('bootLog');
+  const bootProgressContainer = document.getElementById('bootProgressContainer');
+  const bootProgressFill = document.getElementById('bootProgressFill');
+  const bootProgressPercent = document.getElementById('bootProgressPercent');
+  const bootPrompt = document.getElementById('bootPrompt');
 
-  let bgClickCount = 0;
-  let bgClickTimer = null;
+  let canEnter = false;
+  let bootSequenceRunning = false;
 
-  // 인트로 종료 함수 (디졸브 효과)
+  // 부팅 메시지 시퀀스
+  const BOOT_MESSAGES = [
+    { text: 'dichotomiccc BIOS v2.026', type: 'title', delay: 300 },
+    { text: 'Copyright (C) 2026, dichotomiccc design archive', type: 'normal', delay: 200 },
+    { text: '', type: 'normal', delay: 100 },
+    { text: 'Checking system memory... 640K OK', type: 'success', delay: 400 },
+    { text: 'Detecting design modules...', type: 'normal', delay: 300 },
+    { text: '  - uxui.module         [OK]', type: 'success', delay: 150 },
+    { text: '  - branding.module     [OK]', type: 'success', delay: 150 },
+    { text: '  - editorial.module    [OK]', type: 'success', delay: 150 },
+    { text: '  - graphic.module      [OK]', type: 'success', delay: 150 },
+    { text: '  - motion.module       [OK]', type: 'success', delay: 150 },
+    { text: '', type: 'normal', delay: 100 },
+    { text: 'Initializing portfolio system...', type: 'normal', delay: 400 },
+    { text: 'Loading creative assets...', type: 'normal', delay: 300 },
+  ];
+
+  // 인트로 종료 함수
   function closeIntro() {
-    if (!introLanding) return;
+    if (!introLanding || !canEnter) return;
 
-    // 페이드아웃 시작
     introLanding.classList.add('fade-out');
 
-    // 애니메이션 완료 후 제거
     setTimeout(() => {
       introLanding.style.display = 'none';
-      introLanding.classList.remove('fade-out');
       localStorage.setItem('introVisited', 'true');
-    }, 800);
+    }, 500);
+  }
+
+  // 부팅 라인 추가 함수
+  function addBootLine(text, type) {
+    if (!bootLog) return;
+
+    const line = document.createElement('div');
+    line.className = `boot-line ${type}`;
+    line.textContent = text;
+    bootLog.appendChild(line);
+
+    // 스크롤 하단으로
+    bootLog.scrollTop = bootLog.scrollHeight;
+  }
+
+  // 프로그레스 바 업데이트
+  function updateProgress(percent) {
+    if (bootProgressFill) {
+      bootProgressFill.style.width = `${percent}%`;
+    }
+    if (bootProgressPercent) {
+      bootProgressPercent.textContent = `${Math.round(percent)}%`;
+    }
+  }
+
+  // 부팅 시퀀스 실행
+  async function runBootSequence() {
+    if (bootSequenceRunning) return;
+    bootSequenceRunning = true;
+
+    // 로그 초기화
+    if (bootLog) bootLog.innerHTML = '';
+    if (bootProgressContainer) bootProgressContainer.classList.remove('visible');
+    if (bootPrompt) bootPrompt.classList.remove('visible');
+    updateProgress(0);
+    canEnter = false;
+
+    // 부팅 메시지 순차 출력
+    for (let i = 0; i < BOOT_MESSAGES.length; i++) {
+      const msg = BOOT_MESSAGES[i];
+      await new Promise(resolve => setTimeout(resolve, msg.delay));
+      addBootLine(msg.text, msg.type);
+    }
+
+    // 프로그레스 바 표시
+    await new Promise(resolve => setTimeout(resolve, 300));
+    if (bootProgressContainer) {
+      bootProgressContainer.classList.add('visible');
+    }
+
+    // 프로그레스 바 애니메이션 (0% -> 100%)
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      progress += Math.random() * 8 + 2; // 랜덤 증가
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(progressInterval);
+
+        // 완료 메시지
+        setTimeout(() => {
+          addBootLine('', 'normal');
+          addBootLine('System ready.', 'success');
+          addBootLine('', 'normal');
+
+          // 프롬프트 표시
+          setTimeout(() => {
+            if (bootPrompt) bootPrompt.classList.add('visible');
+            canEnter = true;
+            bootSequenceRunning = false;
+          }, 400);
+        }, 300);
+      }
+      updateProgress(progress);
+    }, 80);
+  }
+
+  // 인트로 다시 열기 함수
+  function openIntro() {
+    if (!introLanding) return;
+
+    introLanding.style.display = 'flex';
+    introLanding.classList.remove('fade-out');
+
+    // 부팅 시퀀스 다시 시작
+    runBootSequence();
   }
 
   // 재방문 체크 - 첫 방문 시에만 인트로 표시
@@ -37,23 +137,10 @@
     if (localStorage.getItem('introVisited') === 'true') {
       introLanding.style.display = 'none';
     } else {
-      // 첫 방문: 인트로 표시
+      // 첫 방문: 인트로 표시 및 부팅 시퀀스 시작
       introLanding.style.display = 'flex';
+      runBootSequence();
     }
-  }
-
-  // 인트로 다시 열기 함수 (디졸브 효과)
-  function openIntro() {
-    if (!introLanding) return;
-
-    // 인트로 표시
-    introLanding.style.display = 'flex';
-    introLanding.classList.remove('fade-out');
-
-    // 클릭 카운터 초기화
-    bgClickCount = 0;
-    if (clickCounter) clickCounter.textContent = '';
-    if (introHint) introHint.classList.remove('active');
   }
 
   // 홈페이지 로고 클릭 시 인트로 다시 열기
@@ -61,7 +148,6 @@
   if (siteTitle) {
     siteTitle.addEventListener('click', openIntro);
 
-    // 키보드 접근성
     siteTitle.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -70,77 +156,23 @@
     });
   }
 
-  // 1. 'min' 클릭 시 about 페이지로 이동
-  if (introUser) {
-    introUser.addEventListener('click', (e) => {
-      e.stopPropagation();
-      window.location.href = 'about.html';
-    });
-
-    // 키보드 접근성
-    introUser.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.href = 'about.html';
-      }
-    });
-  }
-
-  // 2. 로고 클릭/Enter 시 인트로 종료
-  if (introLogo) {
-    introLogo.addEventListener('click', closeIntro);
-
-    // 키보드 접근성
-    introLogo.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        closeIntro();
-      }
-    });
-  }
-
-  // 3. 바탕 3번 클릭 시 인트로 종료
+  // 인트로 클릭/키 입력 시 종료
   if (introLanding) {
-    introLanding.addEventListener('click', (e) => {
-      // 로고나 min 버튼 클릭은 제외
-      if (e.target !== introLanding && !e.target.closest('.pixel-animation-container')) {
-        return;
-      }
-
-      bgClickCount++;
-
-      // 클릭 카운터 업데이트
-      if (clickCounter) {
-        clickCounter.textContent = `${bgClickCount}/3`;
-      }
-
-      // 힌트 강조
-      if (introHint) {
-        introHint.classList.add('active');
-      }
-
-      // 타이머 초기화 (2.2초 내에 3번 클릭해야 함)
-      clearTimeout(bgClickTimer);
-      bgClickTimer = setTimeout(() => {
-        bgClickCount = 0;
-        if (clickCounter) clickCounter.textContent = '';
-        if (introHint) introHint.classList.remove('active');
-      }, 2200);
-
-      // 3번 클릭 완료
-      if (bgClickCount >= 3) {
-        clearTimeout(bgClickTimer);
-        closeIntro();
-        bgClickCount = 0;
-      }
+    introLanding.addEventListener('click', () => {
+      if (canEnter) closeIntro();
     });
   }
 
-  // 4. ESC 키로 인트로 건너뛰기
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && introLanding && introLanding.style.display !== 'none') {
-      closeIntro();
+    if (introLanding && introLanding.style.display !== 'none') {
+      if (e.key === 'Escape') {
+        // ESC: 즉시 건너뛰기
+        canEnter = true;
+        closeIntro();
+      } else if (canEnter) {
+        // 아무 키나 누르면 종료
+        closeIntro();
+      }
     }
   });
 
@@ -590,50 +622,92 @@ if (worksLink) {
   // -------------------------
   // Selected Work 프로젝트 호버 프리뷰 및 클릭 시 상세 페이지 이동
   // -------------------------
-  const selectedWorkLinks = document.querySelectorAll(".works-list a");
-  let selectedProjectName = null;
+  const worksList = document.querySelector(".works-list");
+  let selectedWorkData = []; // API에서 로드된 Selected Work 데이터
+  let selectedProjectSlug = null;
+  let selectedProjectThumbnail = null;
   let isPanelOpenForProject = false;
 
-  selectedWorkLinks.forEach((link) => {
-    // 클릭 시: 첫 클릭은 패널 열기, 같은 프로젝트 재클릭은 페이지 이동
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const projectName = link.getAttribute("href").substring(1); // #ddd -> ddd
+  // API에서 Selected Works 로드
+  async function loadSelectedWorks() {
+    try {
+      const response = await fetch(`${API_URL}/selected-works?published=true`);
+      if (!response.ok) return;
 
-      // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
-      if (isPanelOpenForProject && selectedProjectName === projectName) {
-        window.location.href = `./projects/${projectName}.html`;
-        return;
+      const result = await response.json();
+      selectedWorkData = result.data || [];
+
+      // 리스트 업데이트
+      if (worksList && selectedWorkData.length > 0) {
+        worksList.innerHTML = '';
+        selectedWorkData.forEach(work => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `#${work.slug}`;
+          a.textContent = work.title;
+          a.dataset.slug = work.slug;
+          a.dataset.thumbnail = work.thumbnail?.url || '';
+          li.appendChild(a);
+          worksList.appendChild(li);
+        });
+
+        // 이벤트 리스너 재설정
+        setupSelectedWorkLinks();
       }
+    } catch (error) {
+      console.log('Failed to load selected works:', error);
+    }
+  }
 
-      // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
-      selectedProjectName = projectName;
+  function setupSelectedWorkLinks() {
+    const links = document.querySelectorAll(".works-list a");
 
-      // 이미지 경로 설정
-      if (selectedWorkImg) {
-        selectedWorkImg.src = `./assets/img/selected/${projectName}.jpg`;
-        selectedWorkImg.alt = projectName;
-      }
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const slug = link.dataset.slug || link.getAttribute("href").substring(1);
+        const thumbnail = link.dataset.thumbnail;
 
-      // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
-      if (!isPanelOpenForProject) {
-        closeAllPanels();
-      }
+        // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
+        if (isPanelOpenForProject && selectedProjectSlug === slug) {
+          window.location.href = `./projects/view.html?slug=${slug}`;
+          return;
+        }
 
-      // 패널 열기
-      if (selectedWorkPanel) {
-        selectedWorkPanel.classList.add("open");
-        selectedWorkPanel.setAttribute("aria-hidden", "false");
-        isPanelOpenForProject = true;
-      }
+        // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
+        selectedProjectSlug = slug;
+        selectedProjectThumbnail = thumbnail;
+
+        // 이미지 경로 설정 (API 썸네일 또는 폴백)
+        if (selectedWorkImg) {
+          if (thumbnail) {
+            selectedWorkImg.src = thumbnail;
+          } else {
+            selectedWorkImg.src = `./assets/img/selected/${slug}.jpg`;
+          }
+          selectedWorkImg.alt = slug;
+        }
+
+        // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
+        if (!isPanelOpenForProject) {
+          closeAllPanels();
+        }
+
+        // 패널 열기
+        if (selectedWorkPanel) {
+          selectedWorkPanel.classList.add("open");
+          selectedWorkPanel.setAttribute("aria-hidden", "false");
+          isPanelOpenForProject = true;
+        }
+      });
     });
-  });
+  }
 
   // 패널 이미지 클릭 시 상세 페이지로 이동
   if (selectedWorkImg) {
     selectedWorkImg.addEventListener("click", () => {
-      if (selectedProjectName) {
-        window.location.href = `./projects/${selectedProjectName}.html`;
+      if (selectedProjectSlug) {
+        window.location.href = `./projects/view.html?slug=${selectedProjectSlug}`;
       }
     });
   }
@@ -644,6 +718,9 @@ if (worksLink) {
     originalCloseAllPanels();
     isPanelOpenForProject = false;
   };
+
+  // 페이지 로드 시 Selected Works 로드
+  loadSelectedWorks();
 
   // -------------------------
   // History 키워드 감지 (타이핑으로 'history' 입력 시 모달 표시)
