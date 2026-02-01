@@ -658,48 +658,62 @@ if (worksLink) {
   // 페이지 로드 시 Selected Works 데이터 로드
   loadSelectedWorksData();
 
-  selectedWorkLinks.forEach((link) => {
-    // 클릭 시: 첫 클릭은 패널 열기, 같은 프로젝트 재클릭은 페이지 이동
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const slug = link.getAttribute("href").substring(1); // #ddd -> ddd
-      const thumbnail = link.dataset.thumbnail;
-      const hasApiData = link.dataset.hasApiData === 'true';
+  // 썸네일 이미지 업데이트 함수
+  function updateSelectedWorkPreview(slug, thumbnail) {
+    selectedProjectSlug = slug;
 
-      // 이미 같은 프로젝트 패널이 열려있으면 페이지 이동
-      if (isPanelOpenForProject && selectedProjectSlug === slug) {
-        // API 데이터가 있으면 selected-work 뷰 페이지로, 없으면 정적 페이지로
-        if (hasApiData) {
-          window.location.href = `./selected/view.html?slug=${slug}`;
-        } else {
-          window.location.href = `./projects/${slug}.html`;
-        }
-        return;
-      }
+    if (selectedWorkImg) {
+      // 페이드 아웃 효과
+      selectedWorkImg.style.opacity = "0";
 
-      // 다른 프로젝트 클릭 또는 첫 클릭: 이미지 교체 및 패널 열기
-      selectedProjectSlug = slug;
-
-      // 이미지 경로 설정 (API 썸네일 우선, 폴백은 정적 이미지)
-      if (selectedWorkImg) {
+      setTimeout(() => {
         if (thumbnail) {
           selectedWorkImg.src = thumbnail;
         } else {
           selectedWorkImg.src = `./assets/img/selected/${slug}.jpg`;
         }
         selectedWorkImg.alt = slug;
-      }
 
-      // 패널이 이미 열려있으면 closeAllPanels 호출 안 함 (부드러운 전환)
+        // 페이드 인 효과
+        selectedWorkImg.onload = () => (selectedWorkImg.style.opacity = "1");
+        setTimeout(() => (selectedWorkImg.style.opacity = "1"), 60);
+      }, 160);
+    }
+  }
+
+  selectedWorkLinks.forEach((link) => {
+    // 호버 시: 패널 열기 및 썸네일 표시 (PC만)
+    link.addEventListener("mouseenter", () => {
+      if (window.innerWidth <= 768) return; // 모바일에서는 호버 무시
+
+      const slug = link.getAttribute("href").substring(1);
+      const thumbnail = link.dataset.thumbnail;
+
+      // 패널이 닫혀있으면 열기
       if (!isPanelOpenForProject) {
         closeAllPanels();
+        if (selectedWorkPanel) {
+          selectedWorkPanel.classList.add("open");
+          selectedWorkPanel.setAttribute("aria-hidden", "false");
+          isPanelOpenForProject = true;
+        }
       }
 
-      // 패널 열기
-      if (selectedWorkPanel) {
-        selectedWorkPanel.classList.add("open");
-        selectedWorkPanel.setAttribute("aria-hidden", "false");
-        isPanelOpenForProject = true;
+      // 썸네일 업데이트
+      updateSelectedWorkPreview(slug, thumbnail);
+    });
+
+    // 클릭 시: 상세 페이지로 이동
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const slug = link.getAttribute("href").substring(1);
+      const hasApiData = link.dataset.hasApiData === 'true';
+
+      // API 데이터가 있으면 selected-work 뷰 페이지로, 없으면 정적 페이지로
+      if (hasApiData) {
+        window.location.href = `./selected/view.html?slug=${slug}`;
+      } else {
+        window.location.href = `./projects/${slug}.html`;
       }
     });
   });
