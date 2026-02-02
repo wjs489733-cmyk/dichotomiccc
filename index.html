@@ -19,18 +19,35 @@
 </head>
 
 <body class="theme-default">
-  <!-- 인트로 레이어 -->
-  <div id="intro-landing" class="intro-layer galmuri" role="dialog" aria-label="intro landing">
-    <header class="intro-header">
-      <button class="intro-logo" id="introLogo" aria-label="로고 클릭하여 홈으로 이동">
-        dichotomiccc
-      </button>
-      <button class="intro-user" id="introUser" aria-label="min 클릭하여 about 페이지로 이동">min</button>
-    </header>
+  <!-- 인트로 레이어 (레트로 부팅 스타일) -->
+  <div id="intro-landing" class="intro-layer" role="dialog" aria-label="intro landing">
+    <div class="boot-screen">
+      <!-- 부팅 로그 영역 -->
+      <div class="boot-log" id="bootLog">
+        <!-- JS로 동적 생성 -->
+      </div>
 
-    <div class="pixel-animation-container">
-      <img src="./assets/img/pixel-seed.gif" alt="fluttering seed" class="pixel-seed-art" id="pixelSeedImg">
+      <!-- 프로그레스 바 -->
+      <div class="boot-progress-container" id="bootProgressContainer">
+        <div class="boot-progress-label">Loading system...</div>
+        <div class="boot-progress-bar">
+          <div class="boot-progress-fill" id="bootProgressFill"></div>
+        </div>
+        <div class="boot-progress-percent" id="bootProgressPercent">0%</div>
+      </div>
+
+      <!-- 엔터 프롬프트 -->
+      <div class="boot-prompt" id="bootPrompt">
+        <span class="prompt-text">Press any key to continue...</span>
+        <span class="prompt-cursor">_</span>
+      </div>
     </div>
+
+    <!-- 하단 정보 -->
+    <footer class="boot-footer">
+      <span>dichotomiccc BIOS v2.026</span>
+      <span>design archive system</span>
+    </footer>
   </div>
 
   <div class="theme-switcher" id="themeSwitcher" aria-label="theme switcher">
@@ -121,6 +138,7 @@
         <li><button class="cat" data-cat="graphic" type="button">graphic</button></li>
         <li><button class="cat" data-cat="motion" type="button">motion</button></li>
         <li><button class="cat" data-cat="etc" type="button">etc</button></li>
+        <li><button class="cat cat-showall" data-cat="showall" type="button">show all →</button></li>
       </ul>
     </div>
     <button class="close-panel-btn galmuri mobile-only">close [x]</button>

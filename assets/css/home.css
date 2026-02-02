@@ -546,6 +546,19 @@
     0 0 14px rgba(255,255,255,0.25);
 }
 
+/* show all 버튼 스타일 */
+.work-cats .cat.cat-showall{
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--text-soft);
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.work-cats .cat.cat-showall:hover{
+  opacity: 1;
+}
+
 /* ===== Selected Work Detail Panel ===== */
 .selected-work-panel{
   position: fixed;
@@ -983,126 +996,243 @@
 }
 
 /* ==========================================
-   인트로 레이어 스타일
+   인트로 레이어 스타일 (레트로 부팅 화면)
    ========================================== */
 
 /* 인트로 전체 레이어 */
 #intro-landing {
   position: fixed;
   inset: 0;
-  background-color: #07090D;
+  background-color: #000000;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   color: #ffffff;
   opacity: 1;
-  transition: opacity 0.6s ease-out;
+  cursor: pointer;
+  transition: opacity 0.5s ease-out;
+  overflow: hidden;
+}
+
+/* 스캔라인 효과 */
+#intro-landing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* CRT 글로우 효과 */
+#intro-landing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 90%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+  z-index: 5;
 }
 
 /* 페이드아웃 상태 */
 #intro-landing.fade-out {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.8s ease-out;
 }
 
-/* 인트로 헤더 */
-.intro-header {
-  position: absolute;
-  top: var(--m);
-  left: var(--m);
-  right: var(--m);
+/* 부팅 스크린 컨테이너 */
+.boot-screen {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  line-height: 1.2;
-}
-
-/* 로고 버튼 스타일 */
-.intro-logo {
-  appearance: none;
-  background: transparent;
-  border: none;
-  padding: 0;
-  color: #a3a3a3;
+  flex-direction: column;
+  padding: 40px;
   font-family: "Galmuri7", monospace;
-  font-size: inherit;
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.2s;
-  outline: none;
-}
-
-.intro-logo:hover {
-  color: #ffffff;
-}
-
-/* 사용자 이름 버튼 'min' */
-.intro-user {
-  appearance: none;
-  background: transparent;
-  border: none;
-  padding: 0;
-  color: #a3a3a3;
-  font-family: "Galmuri7", monospace;
-  font-size: inherit;
-  cursor: pointer;
-  text-align: right;
-  transition: color 0.2s;
-  outline: none;
-}
-
-.intro-user:hover {
-  color: #97E4D5;
-}
-
-/* 중앙 픽셀 애니메이션 */
-.pixel-animation-container {
-  width: 800px;
-  height: 800px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   z-index: 1;
 }
 
-.pixel-seed-art {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* 하단 힌트 */
-.intro-hint {
-  position: absolute;
-  bottom: var(--m);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+/* 부팅 로그 영역 */
+.boot-log {
+  flex: 1;
   display: flex;
-  gap: 12px;
-  align-items: center;
-  transition: color 0.2s;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
 }
 
-/* 클릭 카운터 */
-.click-counter {
+/* 부팅 로그 라인 */
+.boot-line {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #a3a3a3;
+  opacity: 0;
+  animation: bootLineAppear 0.1s ease forwards;
+}
+
+.boot-line.success {
   color: #97E4D5;
-  font-weight: bold;
-  min-width: 20px;
-  text-align: center;
 }
 
-/* 클릭 시 힌트 강조 */
-.intro-hint.active {
-  color: rgba(255, 255, 255, 0.9);
+.boot-line.highlight {
+  color: #ffffff;
+}
+
+.boot-line.title {
+  color: #ffffff;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+@keyframes bootLineAppear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 프로그레스 바 컨테이너 */
+.boot-progress-container {
+  margin-top: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.boot-progress-container.visible {
+  opacity: 1;
+}
+
+.boot-progress-label {
+  font-size: 14px;
+  color: #a3a3a3;
+  margin-bottom: 8px;
+}
+
+.boot-progress-bar {
+  width: 100%;
+  max-width: 400px;
+  height: 16px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  position: relative;
+  overflow: hidden;
+}
+
+.boot-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #97E4D5 0%, #7fcfbe 100%);
+  transition: width 0.1s linear;
+  position: relative;
+}
+
+/* 프로그레스 바 반짝임 효과 */
+.boot-progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: progressShine 1s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.boot-progress-percent {
+  font-size: 14px;
+  color: #97E4D5;
+  margin-top: 8px;
+}
+
+/* 엔터 프롬프트 */
+.boot-prompt {
+  margin-top: 32px;
+  font-size: 14px;
+  color: #ffffff;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.boot-prompt.visible {
+  opacity: 1;
+}
+
+.prompt-cursor {
+  color: #97E4D5;
+  animation: cursorBlink 0.6s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* 부팅 하단 푸터 */
+.boot-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Galmuri7", monospace;
+  font-size: 11px;
+  color: #555;
+  z-index: 1;
+}
+
+/* 모바일 부팅 스타일 */
+@media (max-width: 768px) {
+  .boot-screen {
+    padding: 24px 20px;
+  }
+
+  .boot-line {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .boot-line.title {
+    font-size: 13px;
+  }
+
+  .boot-progress-bar {
+    max-width: 100%;
+    height: 12px;
+  }
+
+  .boot-progress-label,
+  .boot-progress-percent,
+  .boot-prompt {
+    font-size: 11px;
+  }
+
+  .boot-footer {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    font-size: 9px;
+  }
 }
 
 /* ==========================================

@@ -66,32 +66,31 @@
   style.textContent = `
     .admin-float {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 9999;
+      top: calc(var(--m, 40px) + 2px);
+      right: calc(var(--m, 40px) + 30px);
+      z-index: 49;
     }
 
     .admin-float-toggle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 0;
       background: rgba(151, 228, 213, 0.9);
-      border: none;
+      border: 1px solid rgba(163, 163, 163, 0.35);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      padding: 0;
       transition: all 0.2s ease;
     }
 
     .admin-float-toggle:hover {
-      transform: scale(1.05);
       background: rgba(151, 228, 213, 1);
     }
 
     .admin-float-icon {
-      font-size: 24px;
+      font-size: 10px;
       color: #07090D;
       font-weight: bold;
       line-height: 1;
@@ -104,16 +103,16 @@
 
     .admin-float-menu {
       position: absolute;
-      bottom: 60px;
+      top: 20px;
       right: 0;
       background: rgba(7, 9, 13, 0.95);
       border: 1px solid rgba(163, 163, 163, 0.3);
-      border-radius: 8px;
+      border-radius: 4px;
       padding: 8px 0;
-      min-width: 160px;
+      min-width: 140px;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(10px);
+      transform: translateY(-10px);
       transition: all 0.2s ease;
       backdrop-filter: blur(10px);
     }
@@ -127,11 +126,11 @@
     .admin-float-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
+      gap: 8px;
+      padding: 8px 12px;
       color: var(--text-soft, #a3a3a3);
       text-decoration: none;
-      font-size: 12px;
+      font-size: 11px;
       transition: all 0.2s;
       border: none;
       background: none;
@@ -146,28 +145,28 @@
     }
 
     .admin-float-item .item-icon {
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .admin-float-item .item-text {
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .admin-logout {
       border-top: 1px solid rgba(163, 163, 163, 0.2);
       margin-top: 4px;
-      padding-top: 12px;
+      padding-top: 10px;
     }
 
     @media (max-width: 768px) {
       .admin-float {
-        bottom: 16px;
-        right: 16px;
+        top: calc(var(--m, 20px) + 5px);
+        right: calc(var(--m, 20px) + 32px);
       }
 
       .admin-float-toggle {
-        width: 44px;
-        height: 44px;
+        width: 16px;
+        height: 16px;
       }
     }
   `;

@@ -16,7 +16,11 @@ const projectSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['uxui', 'branding', 'editorial', 'graphic', 'motion', 'etc']
+    enum: [
+      'uxui', 'branding', 'editorial', 'graphic', 'motion', 'etc',
+      'selected_ddd', 'selected_thevois', 'selected_aurevo', 'selected_solife',
+      'selected_iptime_re', 'selected_drOracle_re', 'selected_re_memory'
+    ]
   },
   year: {
     type: String,

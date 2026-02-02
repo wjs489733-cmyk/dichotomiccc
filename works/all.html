@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Works · dichotomiccc</title>
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Galmuri -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css" />
+
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/works-all.css" />
+
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body class="theme-default">
+  <main class="works-all-wrap">
+    <!-- Header -->
+    <header class="works-header">
+      <a class="back galmuri" href="../index.html">← back</a>
+      <h1 class="galmuri works-title">all works</h1>
+    </header>
+
+    <!-- Filters -->
+    <section class="filters-section">
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <span class="filter-label galmuri">category</span>
+        <div class="filter-buttons" id="categoryFilters">
+          <button class="filter-btn active galmuri" data-filter="all">all</button>
+          <button class="filter-btn galmuri" data-filter="uxui">uxui</button>
+          <button class="filter-btn galmuri" data-filter="branding">branding</button>
+          <button class="filter-btn galmuri" data-filter="editorial">editorial</button>
+          <button class="filter-btn galmuri" data-filter="graphic">graphic</button>
+          <button class="filter-btn galmuri" data-filter="motion">motion</button>
+          <button class="filter-btn galmuri" data-filter="etc">etc</button>
+        </div>
+      </div>
+
+      <!-- Year Filter -->
+      <div class="filter-group">
+        <span class="filter-label galmuri">year</span>
+        <div class="filter-buttons" id="yearFilters">
+          <button class="filter-btn active galmuri" data-filter="all">all</button>
+          <!-- 년도 버튼은 JS로 동적 생성 -->
+        </div>
+      </div>
+
+      <!-- Search (Future) -->
+      <div class="filter-group search-group">
+        <span class="filter-label galmuri">search</span>
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input galmuri" placeholder="search works..." />
+          <button class="search-clear galmuri" id="searchClear" style="display: none;">×</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Info -->
+    <div class="results-info galmuri">
+      <span id="resultsCount">Loading...</span>
+    </div>
+
+    <!-- Works Grid -->
+    <section class="works-grid" id="worksGrid">
+      <div class="loading-state">
+        <p class="galmuri">Loading works...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/works-all.js"></script>
+  <script src="../js/admin-float.js"></script>
+</body>
+</html>

@@ -459,7 +459,7 @@ if (worksLink) {
       const btn = e.target.closest(".cat");
       if (!btn) return;
       const cat = btn.dataset.cat;
-      if (!cat) return;
+      if (!cat || cat === "showall") return; // show all 버튼은 호버 시 이미지 변경 안함
       setActiveCat(cat, false);
     });
 
@@ -469,6 +469,12 @@ if (worksLink) {
       if (!btn) return;
       const cat = btn.dataset.cat;
       if (!cat) return;
+
+      // "show all" 버튼 클릭 시 all.html로 이동
+      if (cat === "showall") {
+        window.location.href = `./works/all.html`;
+        return;
+      }
 
       // 카테고리 갤러리 페이지로 이동
       window.location.href = `./works/${cat}.html`;
