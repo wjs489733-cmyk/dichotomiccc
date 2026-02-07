@@ -450,6 +450,33 @@ if (worksLink) {
     btn.addEventListener('click', closeAllPanels);
   });
 
+  // About/Contact 썸네일 클릭 시 해당 페이지로 이동
+  const aboutPreview = document.getElementById('aboutPreview');
+  const contactPreview = document.getElementById('contactPreview');
+
+  if (aboutPreview) {
+    aboutPreview.addEventListener('click', () => {
+      window.location.href = './about.html';
+    });
+    aboutPreview.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = './about.html';
+      }
+    });
+  }
+
+  if (contactPreview) {
+    contactPreview.addEventListener('click', () => {
+      window.location.href = './contact.html';
+    });
+    contactPreview.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = './contact.html';
+      }
+    });
+  }
 
   // 카테고리 버튼 동작
   if (workCats) {
@@ -628,36 +655,86 @@ if (worksLink) {
   // -------------------------
   // Selected Work 프로젝트 호버 프리뷰 및 클릭 시 상세 페이지 이동
   // -------------------------
-  const selectedWorkLinks = document.querySelectorAll(".works-list a");
+  const selectedWorksList = document.getElementById("selectedWorksList");
   let selectedWorkDataMap = {}; // slug -> API 데이터 매핑
   let selectedProjectSlug = null;
   let isPanelOpenForProject = false;
 
-  // API에서 Selected Works 로드하고 썸네일 데이터만 업데이트
+  // 이벤트 리스너를 바인딩하는 함수 (동적 리스트용)
+  function bindSelectedWorkEvents() {
+    const links = document.querySelectorAll(".works-list a");
+
+    links.forEach((link) => {
+      // 호버 시: 패널 열기 및 썸네일 표시 (PC만)
+      link.addEventListener("mouseenter", () => {
+        if (window.innerWidth <= 768) return;
+
+        const slug = link.getAttribute("href").substring(1);
+        const thumbnail = link.dataset.thumbnail;
+
+        if (!isPanelOpenForProject) {
+          closeAllPanels();
+          if (selectedWorkPanel) {
+            selectedWorkPanel.classList.add("open");
+            selectedWorkPanel.setAttribute("aria-hidden", "false");
+            isPanelOpenForProject = true;
+          }
+        }
+
+        updateSelectedWorkPreview(slug, thumbnail);
+      });
+
+      // 클릭 시: 상세 페이지로 이동
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const slug = link.getAttribute("href").substring(1);
+        window.location.href = `./selected/view.html?slug=${slug}`;
+      });
+    });
+  }
+
+  // API에서 Selected Works 로드하고 리스트 동적 생성
   async function loadSelectedWorksData() {
     try {
       const response = await fetch(`${API_URL}/selected-works?published=true`);
-      if (!response.ok) return;
+      if (!response.ok) {
+        // API 실패 시 기존 하드코딩된 리스트 사용
+        bindSelectedWorkEvents();
+        return;
+      }
 
       const result = await response.json();
       const works = result.data || [];
+
+      if (works.length === 0) {
+        // 데이터가 없으면 기존 리스트 유지
+        bindSelectedWorkEvents();
+        return;
+      }
 
       // slug를 키로 하는 맵 생성
       works.forEach(work => {
         selectedWorkDataMap[work.slug] = work;
       });
 
-      // 기존 링크에 썸네일 데이터 추가
-      selectedWorkLinks.forEach(link => {
-        const slug = link.getAttribute("href").substring(1); // #ddd -> ddd
-        const workData = selectedWorkDataMap[slug];
-        if (workData && workData.thumbnail?.url) {
-          link.dataset.thumbnail = workData.thumbnail.url;
-          link.dataset.hasApiData = 'true';
-        }
-      });
+      // 동적으로 리스트 생성
+      if (selectedWorksList) {
+        const listHTML = works.map(work => {
+          // displayTitle이 있으면 사용, 없으면 title 사용
+          const displayText = work.displayTitle || work.title;
+          return `<li><a href="#${work.slug}" data-thumbnail="${work.thumbnail?.url || ''}" data-has-api-data="true">${displayText}</a></li>`;
+        }).join('');
+
+        selectedWorksList.innerHTML = listHTML;
+      }
+
+      // 새 리스트에 이벤트 바인딩
+      bindSelectedWorkEvents();
+
     } catch (error) {
       console.log('Failed to load selected works data:', error);
+      // 에러 시 기존 리스트 사용
+      bindSelectedWorkEvents();
     }
   }
 
@@ -687,53 +764,15 @@ if (worksLink) {
     }
   }
 
-  selectedWorkLinks.forEach((link) => {
-    // 호버 시: 패널 열기 및 썸네일 표시 (PC만)
-    link.addEventListener("mouseenter", () => {
-      if (window.innerWidth <= 768) return; // 모바일에서는 호버 무시
-
-      const slug = link.getAttribute("href").substring(1);
-      const thumbnail = link.dataset.thumbnail;
-
-      // 패널이 닫혀있으면 열기
-      if (!isPanelOpenForProject) {
-        closeAllPanels();
-        if (selectedWorkPanel) {
-          selectedWorkPanel.classList.add("open");
-          selectedWorkPanel.setAttribute("aria-hidden", "false");
-          isPanelOpenForProject = true;
-        }
-      }
-
-      // 썸네일 업데이트
-      updateSelectedWorkPreview(slug, thumbnail);
-    });
-
-    // 클릭 시: 상세 페이지로 이동
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const slug = link.getAttribute("href").substring(1);
-      const hasApiData = link.dataset.hasApiData === 'true';
-
-      // API 데이터가 있으면 selected-work 뷰 페이지로, 없으면 정적 페이지로
-      if (hasApiData) {
-        window.location.href = `./selected/view.html?slug=${slug}`;
-      } else {
-        window.location.href = `./projects/${slug}.html`;
-      }
-    });
-  });
+  // Selected Work 이벤트 바인딩은 bindSelectedWorkEvents()에서 처리됨
+  // (동적으로 로드된 목록과 폴백 목록 모두 지원)
 
   // 패널 이미지 클릭 시 상세 페이지로 이동
   if (selectedWorkImg) {
     selectedWorkImg.addEventListener("click", () => {
       if (selectedProjectSlug) {
-        const hasApiData = selectedWorkDataMap[selectedProjectSlug];
-        if (hasApiData) {
-          window.location.href = `./selected/view.html?slug=${selectedProjectSlug}`;
-        } else {
-          window.location.href = `./projects/${selectedProjectSlug}.html`;
-        }
+        // 항상 selected work view 페이지로 이동
+        window.location.href = `./selected/view.html?slug=${selectedProjectSlug}`;
       }
     });
   }
@@ -830,5 +869,128 @@ if (worksLink) {
       closeHistoryModal();
     }
   });
+
+  // -------------------------
+  // 🔐 모바일 Admin 접근 (copyright 3회 탭)
+  // -------------------------
+  const copyrightEl = document.querySelector('.copyright');
+  let copyrightTapCount = 0;
+  let copyrightTapTimer = null;
+  let adminInputVisible = false;
+
+  if (copyrightEl) {
+    copyrightEl.addEventListener('click', () => {
+      // 이미 입력창이 보이면 무시
+      if (adminInputVisible) return;
+
+      copyrightTapCount++;
+
+      // 2초 내에 탭하지 않으면 리셋
+      clearTimeout(copyrightTapTimer);
+      copyrightTapTimer = setTimeout(() => {
+        copyrightTapCount = 0;
+      }, 2000);
+
+      // 3회 탭 시 입력창 표시
+      if (copyrightTapCount >= 3) {
+        copyrightTapCount = 0;
+        showAdminInput();
+      }
+    });
+  }
+
+  function showAdminInput() {
+    adminInputVisible = true;
+
+    // 입력창 컨테이너 생성
+    const inputContainer = document.createElement('div');
+    inputContainer.className = 'admin-secret-input';
+    inputContainer.innerHTML = `
+      <input type="text" id="adminSecretField" placeholder="enter code..." autocomplete="off" autocapitalize="off" />
+    `;
+
+    // 스타일 추가
+    const style = document.createElement('style');
+    style.textContent = `
+      .admin-secret-input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px 20px;
+        background: rgba(7, 9, 13, 0.95);
+        border-top: 1px solid rgba(163, 163, 163, 0.3);
+        z-index: 9999;
+        animation: slideUp 0.2s ease;
+      }
+      @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+      .admin-secret-input input {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(163, 163, 163, 0.3);
+        color: var(--hi, #f0f0f0);
+        font-family: "Galmuri7", monospace;
+        font-size: 14px;
+        outline: none;
+      }
+      .admin-secret-input input:focus {
+        border-color: rgba(151, 228, 213, 0.5);
+      }
+      .admin-secret-input input::placeholder {
+        color: var(--text-soft, #a3a3a3);
+        opacity: 0.6;
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.appendChild(inputContainer);
+
+    // 입력 필드에 포커스 (키보드 자동 표시)
+    const inputField = document.getElementById('adminSecretField');
+    setTimeout(() => inputField.focus(), 100);
+
+    // Enter 키 감지
+    inputField.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const value = inputField.value.toLowerCase().trim();
+        if (value === 'admin') {
+          window.location.href = './admin/login.html';
+        } else {
+          // 틀리면 입력창 제거
+          hideAdminInput(inputContainer);
+        }
+      }
+      // ESC로 닫기
+      if (e.key === 'Escape') {
+        hideAdminInput(inputContainer);
+      }
+    });
+
+    // 외부 클릭 시 닫기
+    inputContainer.addEventListener('click', (e) => {
+      if (e.target === inputContainer) {
+        hideAdminInput(inputContainer);
+      }
+    });
+  }
+
+  function hideAdminInput(container) {
+    container.style.animation = 'slideDown 0.2s ease forwards';
+    const slideDownStyle = document.createElement('style');
+    slideDownStyle.textContent = `
+      @keyframes slideDown {
+        from { transform: translateY(0); }
+        to { transform: translateY(100%); }
+      }
+    `;
+    document.head.appendChild(slideDownStyle);
+    setTimeout(() => {
+      container.remove();
+      adminInputVisible = false;
+    }, 200);
+  }
 
 })();

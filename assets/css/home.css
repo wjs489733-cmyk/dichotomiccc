@@ -121,6 +121,20 @@
   --info-title-mobile-color: var(--hi);
   --info-text-mobile-size: 12px;
   --info-text-mobile-color: var(--text-soft);
+
+  /* ========== 모바일 버튼 위치 ========== */
+
+  /* 🔧 Close 버튼 (패널 닫기) */
+  --close-btn-mobile-top: 24px;
+  --close-btn-mobile-right: 20px;
+
+  /* 🔧 Show All 버튼 */
+  --showall-btn-mobile-y: -8px;
+  --showall-btn-mobile-x: 0px;
+
+  /* 🔧 Work 카테고리 버튼들 전체 위치 */
+  --work-cats-mobile-y: 0px;
+  --work-cats-mobile-x: 0px;
 }
 
 .left-inner{
@@ -622,6 +636,51 @@
   pointer-events: auto; /* 내용은 클릭 가능 */
 }
 
+/* 🔧 Info Preview (썸네일 클릭 방식) */
+.info-preview{
+  width: var(--info-frame-width);
+  aspect-ratio: 3 / 4;
+  max-height: var(--info-frame-max-height);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.info-preview img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.info-preview:hover img{
+  transform: scale(1.02);
+  opacity: 0.85;
+}
+
+.info-preview:focus{
+  outline: 2px solid var(--hi);
+  outline-offset: 2px;
+}
+
+/* 🔧 Info Label (about → / contact →) */
+.info-label{
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 14px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 14px;
+  transition: all 0.2s ease;
+}
+
+.info-preview:hover .info-label{
+  background: rgba(151, 228, 213, 0.9);
+  color: #07090D;
+}
+
+/* Legacy info-box (fallback) */
 .info-box{
   width: var(--info-frame-width);
   aspect-ratio: 3 / 4;
@@ -965,18 +1024,62 @@
     color: var(--info-text-mobile-color);
   }
 
+  /* 🔧 모바일 Info Preview (썸네일) */
+  .info-panel-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    gap: 24px;
+    padding-bottom: 40px;
+  }
+
+  .info-preview {
+    width: var(--info-frame-mobile-width);
+    aspect-ratio: var(--info-frame-mobile-ratio);
+    max-height: none;
+  }
+
+  .info-label {
+    bottom: 12px;
+    right: 12px;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
   /* 모바일 전용 닫기 버튼 표시 */
   .mobile-only.close-panel-btn {
     display: block;
     position: absolute;
-    top: 24px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: var(--text-soft);
+    top: var(--close-btn-mobile-top);
+    right: var(--close-btn-mobile-right);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(163, 163, 163, 0.3);
+    color: var(--hi);
     font-size: 14px;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px 16px;
+    pointer-events: auto !important; /* 터치 이벤트 활성화 */
+    z-index: 200; /* 다른 요소 위에 표시 */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* 🔧 Work 카테고리 버튼들 위치 조정 */
+  .work-cats {
+    transform: translate(var(--work-cats-mobile-x), var(--work-cats-mobile-y));
+  }
+
+  /* 🔧 Show All 버튼 위치 조정 */
+  .work-cats .cat.cat-showall {
+    transform: translate(var(--showall-btn-mobile-x), var(--showall-btn-mobile-y));
+  }
+
+  .mobile-only.close-panel-btn:active {
+    background: rgba(151, 228, 213, 0.2);
+    border-color: rgba(151, 228, 213, 0.5);
   }
 
   /* 인트로 모바일 스타일 */

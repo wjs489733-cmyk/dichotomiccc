@@ -136,7 +136,7 @@
 /* Dashboard Page */
 .admin-dashboard {
   min-height: 100vh;
-  background: var(--bg);
+  background: #000000;
 }
 
 .admin-header {
@@ -145,8 +145,8 @@
   left: 0;
   right: 0;
   height: 60px;
-  background: rgba(7, 9, 13, 0.95);
-  border-bottom: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid rgba(151, 228, 213, 0.2);
   backdrop-filter: blur(10px);
   z-index: 100;
   display: flex;
@@ -163,7 +163,7 @@
 
 .admin-header-logo {
   font-size: 16px;
-  color: var(--hi);
+  color: #97E4D5;
   text-decoration: none;
   transition: opacity 0.2s;
 }
@@ -184,14 +184,18 @@
   display: block;
   padding: 8px 12px;
   font-size: 11px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
 
-.admin-nav a:hover,
+.admin-nav a:hover {
+  color: #97E4D5;
+}
+
 .admin-nav a.active {
-  color: var(--hi);
+  color: #97E4D5;
+  background: rgba(151, 228, 213, 0.1);
 }
 
 .admin-header-right {
@@ -202,14 +206,14 @@
 
 .admin-user {
   font-size: 11px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .btn-logout {
   appearance: none;
   background: transparent;
-  border: 1px solid rgba(163, 163, 163, 0.3);
-  color: var(--text-soft);
+  border: 1px solid rgba(151, 228, 213, 0.3);
+  color: rgba(255, 255, 255, 0.6);
   padding: 6px 12px;
   font-family: "Galmuri7", monospace;
   font-size: 10px;
@@ -218,8 +222,9 @@
 }
 
 .btn-logout:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  color: var(--hi);
+  border-color: rgba(151, 228, 213, 0.6);
+  color: #97E4D5;
+  background: rgba(151, 228, 213, 0.1);
 }
 
 .admin-main {
@@ -230,7 +235,7 @@
 
 .admin-title {
   font-size: 24px;
-  color: var(--hi);
+  color: #97E4D5;
   margin: 0 0 24px 0;
 }
 
@@ -242,9 +247,9 @@
 
 .btn-new-project {
   padding: 10px 20px;
-  background: rgba(163, 163, 163, 0.15);
-  border: 1px solid rgba(163, 163, 163, 0.4);
-  color: var(--hi);
+  background: rgba(151, 228, 213, 0.1);
+  border: 1px solid rgba(151, 228, 213, 0.4);
+  color: #97E4D5;
   font-family: "Galmuri7", monospace;
   font-size: 11px;
   cursor: pointer;
@@ -254,8 +259,9 @@
 }
 
 .btn-new-project:hover {
-  background: rgba(163, 163, 163, 0.25);
-  border-color: rgba(163, 163, 163, 0.6);
+  background: rgba(151, 228, 213, 0.2);
+  border-color: rgba(151, 228, 213, 0.6);
+  color: #ffffff;
 }
 
 .projects-grid {
@@ -265,22 +271,23 @@
 }
 
 .project-card {
-  background: rgba(7, 9, 13, 0.6);
-  border: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(151, 228, 213, 0.15);
   padding: 16px;
   transition: all 0.2s;
   position: relative;
 }
 
 .project-card:hover {
-  border-color: rgba(163, 163, 163, 0.4);
+  border-color: rgba(151, 228, 213, 0.4);
+  background: rgba(151, 228, 213, 0.05);
   transform: translateY(-2px);
 }
 
 .project-card-thumb {
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: rgba(163, 163, 163, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   margin-bottom: 16px;
   overflow: hidden;
 }
@@ -294,7 +301,7 @@
 .project-card-title {
   font-family: "Galmuri7", monospace;
   font-size: 14px;
-  color: var(--hi);
+  color: #ffffff;
   margin: 0 0 8px 0;
 }
 
@@ -302,7 +309,7 @@
   display: flex;
   gap: 12px;
   font-size: 10px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 16px;
 }
 
@@ -318,8 +325,8 @@
 .btn-small {
   padding: 6px 12px;
   background: transparent;
-  border: 1px solid rgba(163, 163, 163, 0.3);
-  color: var(--text-soft);
+  border: 1px solid rgba(151, 228, 213, 0.25);
+  color: rgba(255, 255, 255, 0.6);
   font-family: "Galmuri7", monospace;
   font-size: 9px;
   cursor: pointer;
@@ -329,18 +336,20 @@
 }
 
 .btn-small:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  color: var(--hi);
+  border-color: rgba(151, 228, 213, 0.5);
+  color: #97E4D5;
+  background: rgba(151, 228, 213, 0.1);
 }
 
 .btn-danger {
   border-color: rgba(255, 59, 48, 0.4);
-  color: #ff3b30;
+  color: #ff6b6b;
 }
 
 .btn-danger:hover {
   border-color: rgba(255, 59, 48, 0.6);
-  background: rgba(255, 59, 48, 0.1);
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
 }
 
 .project-status-badge {
@@ -350,41 +359,46 @@
   padding: 4px 8px;
   font-family: "Galmuri7", monospace;
   font-size: 9px;
-  background: rgba(7, 9, 13, 0.9);
-  border: 1px solid rgba(163, 163, 163, 0.3);
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(151, 228, 213, 0.2);
 }
 
 .project-status-badge.published {
-  color: #34C759;
-  border-color: rgba(52, 199, 89, 0.4);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.1);
 }
 
 .project-status-badge.draft {
-  color: #FF9500;
-  border-color: rgba(255, 149, 0, 0.4);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.4);
+  background: rgba(251, 191, 36, 0.1);
 }
 
 .project-status-badge.featured {
   color: #97E4D5;
   border-color: rgba(151, 228, 213, 0.4);
+  background: rgba(151, 228, 213, 0.1);
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
   padding: 80px 20px;
+  background: rgba(151, 228, 213, 0.02);
+  border: 1px dashed rgba(151, 228, 213, 0.2);
 }
 
 .empty-state-icon {
   font-size: 48px;
   margin-bottom: 16px;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .empty-state-text {
   font-family: "Galmuri7", monospace;
   font-size: 12px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 24px;
 }
 
@@ -394,7 +408,7 @@
 
 .admin-editor-page {
   min-height: 100vh;
-  background: var(--bg);
+  background: #000000;
 }
 
 .editor-main {
@@ -408,6 +422,11 @@
 .editor-header .back-link {
   display: inline-block;
   margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.editor-header .back-link:hover {
+  color: #97E4D5;
 }
 
 .editor-form {
@@ -417,17 +436,17 @@
 }
 
 .editor-section {
-  background: rgba(7, 9, 13, 0.6);
-  border: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(151, 228, 213, 0.15);
   padding: 24px;
 }
 
 .section-title {
   font-size: 14px;
-  color: var(--hi);
+  color: #97E4D5;
   margin: 0 0 16px 0;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(163, 163, 163, 0.15);
+  border-bottom: 1px solid rgba(151, 228, 213, 0.15);
 }
 
 .form-row {
@@ -451,34 +470,34 @@
 .form-select {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(163, 163, 163, 0.05);
-  border: 1px solid rgba(163, 163, 163, 0.2);
-  color: var(--hi);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(151, 228, 213, 0.2);
+  color: #ffffff;
   font-family: "Pretendard", system-ui, sans-serif;
   font-size: 14px;
   transition: all 0.2s;
   outline: none;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a3a3a3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2397E4D5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
 }
 
 .form-select:focus {
-  border-color: rgba(163, 163, 163, 0.5);
-  background-color: rgba(163, 163, 163, 0.08);
+  border-color: rgba(151, 228, 213, 0.5);
+  background-color: rgba(151, 228, 213, 0.05);
 }
 
 .form-select option {
-  background: #07090D;
+  background: #000000;
   color: #ffffff;
   padding: 8px;
 }
 
 .form-select optgroup {
-  background: #07090D;
-  color: #a3a3a3;
+  background: #000000;
+  color: #97E4D5;
   font-weight: bold;
   padding: 8px;
 }
@@ -500,8 +519,8 @@
 .thumbnail-preview {
   width: 200px;
   height: 267px; /* 3:4 ratio */
-  background: rgba(163, 163, 163, 0.05);
-  border: 2px dashed rgba(163, 163, 163, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px dashed rgba(151, 228, 213, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -511,13 +530,13 @@
 }
 
 .thumbnail-preview:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  background: rgba(163, 163, 163, 0.08);
+  border-color: rgba(151, 228, 213, 0.5);
+  background: rgba(151, 228, 213, 0.05);
 }
 
 .thumbnail-preview.has-image {
   border-style: solid;
-  border-color: rgba(163, 163, 163, 0.3);
+  border-color: rgba(151, 228, 213, 0.3);
 }
 
 .thumbnail-preview img {
@@ -529,14 +548,14 @@
 .upload-placeholder {
   font-family: "Galmuri7", monospace;
   font-size: 11px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .btn-upload {
   padding: 10px 20px;
-  background: rgba(163, 163, 163, 0.1);
-  border: 1px solid rgba(163, 163, 163, 0.3);
-  color: var(--text-soft);
+  background: rgba(151, 228, 213, 0.1);
+  border: 1px solid rgba(151, 228, 213, 0.3);
+  color: rgba(255, 255, 255, 0.6);
   font-family: "Galmuri7", monospace;
   font-size: 11px;
   cursor: pointer;
@@ -544,15 +563,14 @@
 }
 
 .btn-upload:hover {
-  background: rgba(163, 163, 163, 0.2);
-  border-color: rgba(163, 163, 163, 0.5);
-  color: var(--hi);
+  background: rgba(151, 228, 213, 0.2);
+  border-color: rgba(151, 228, 213, 0.5);
+  color: #97E4D5;
 }
 
 .upload-hint {
   font-size: 10px;
-  color: var(--text-soft);
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.4);
   margin: 0;
 }
 
@@ -571,8 +589,8 @@
 
 .gallery-item {
   aspect-ratio: 1;
-  background: rgba(163, 163, 163, 0.05);
-  border: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(151, 228, 213, 0.2);
   position: relative;
   overflow: hidden;
 }
@@ -608,8 +626,8 @@
 
 .gallery-add {
   aspect-ratio: 1;
-  background: rgba(163, 163, 163, 0.05);
-  border: 2px dashed rgba(163, 163, 163, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px dashed rgba(151, 228, 213, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -619,26 +637,26 @@
 }
 
 .gallery-add:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  background: rgba(163, 163, 163, 0.08);
+  border-color: rgba(151, 228, 213, 0.5);
+  background: rgba(151, 228, 213, 0.05);
 }
 
 .gallery-add span {
   font-size: 32px;
-  color: var(--text-soft);
+  color: #97E4D5;
   opacity: 0.5;
 }
 
 /* Quill Editor Customization */
 .editor-wrapper {
-  background: rgba(163, 163, 163, 0.05);
-  border: 1px solid rgba(163, 163, 163, 0.2);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(151, 228, 213, 0.2);
 }
 
 .ql-toolbar.ql-snow {
   border: none;
-  border-bottom: 1px solid rgba(163, 163, 163, 0.2);
-  background: rgba(163, 163, 163, 0.05);
+  border-bottom: 1px solid rgba(151, 228, 213, 0.15);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .ql-container.ql-snow {
@@ -649,42 +667,42 @@
 }
 
 .ql-editor {
-  color: var(--hi);
+  color: #ffffff;
   line-height: 1.6;
 }
 
 .ql-editor.ql-blank::before {
-  color: rgba(163, 163, 163, 0.4);
+  color: rgba(255, 255, 255, 0.3);
   font-style: normal;
 }
 
 .ql-snow .ql-stroke {
-  stroke: var(--text-soft);
+  stroke: rgba(255, 255, 255, 0.5);
 }
 
 .ql-snow .ql-fill {
-  fill: var(--text-soft);
+  fill: rgba(255, 255, 255, 0.5);
 }
 
 .ql-snow .ql-picker {
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .ql-snow .ql-picker-options {
-  background: #07090D;
-  border-color: rgba(163, 163, 163, 0.3);
+  background: #000000;
+  border-color: rgba(151, 228, 213, 0.3);
 }
 
 .ql-snow .ql-picker-item:hover {
-  color: var(--hi);
+  color: #97E4D5;
 }
 
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
-  border-color: rgba(163, 163, 163, 0.3);
+  border-color: rgba(151, 228, 213, 0.3);
 }
 
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
-  border-color: rgba(163, 163, 163, 0.3);
+  border-color: rgba(151, 228, 213, 0.3);
 }
 
 .ql-snow.ql-toolbar button:hover,
@@ -693,19 +711,19 @@
 .ql-snow .ql-toolbar button:focus,
 .ql-snow.ql-toolbar button.ql-active,
 .ql-snow .ql-toolbar button.ql-active {
-  color: var(--hi);
+  color: #97E4D5;
 }
 
 .ql-snow.ql-toolbar button:hover .ql-stroke,
 .ql-snow .ql-toolbar button:hover .ql-stroke,
 .ql-snow.ql-toolbar button.ql-active .ql-stroke {
-  stroke: var(--hi);
+  stroke: #97E4D5;
 }
 
 .ql-snow.ql-toolbar button:hover .ql-fill,
 .ql-snow .ql-toolbar button:hover .ql-fill,
 .ql-snow.ql-toolbar button.ql-active .ql-fill {
-  fill: var(--hi);
+  fill: #97E4D5;
 }
 
 /* Settings Checkboxes */
@@ -721,7 +739,7 @@
   gap: 12px;
   cursor: pointer;
   font-size: 12px;
-  color: var(--text-soft);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -731,8 +749,8 @@
 .checkbox-custom {
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(163, 163, 163, 0.4);
-  background: rgba(163, 163, 163, 0.05);
+  border: 1px solid rgba(151, 228, 213, 0.3);
+  background: rgba(255, 255, 255, 0.02);
   position: relative;
   transition: all 0.2s;
 }
@@ -755,7 +773,7 @@
 }
 
 .checkbox-label:hover .checkbox-custom {
-  border-color: rgba(163, 163, 163, 0.6);
+  border-color: rgba(151, 228, 213, 0.5);
 }
 
 /* Editor Actions */
@@ -764,14 +782,14 @@
   justify-content: flex-end;
   gap: 16px;
   padding-top: 24px;
-  border-top: 1px solid rgba(163, 163, 163, 0.15);
+  border-top: 1px solid rgba(151, 228, 213, 0.15);
 }
 
 .btn-cancel {
   padding: 12px 32px;
   background: transparent;
-  border: 1px solid rgba(163, 163, 163, 0.3);
-  color: var(--text-soft);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
   font-family: "Galmuri7", monospace;
   font-size: 11px;
   cursor: pointer;
@@ -779,8 +797,8 @@
 }
 
 .btn-cancel:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  color: var(--hi);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
 }
 
 .btn-save {
@@ -796,6 +814,7 @@
 .btn-save:hover:not(:disabled) {
   background: rgba(151, 228, 213, 0.25);
   border-color: rgba(151, 228, 213, 0.6);
+  color: #ffffff;
 }
 
 .btn-save:disabled {
@@ -813,16 +832,16 @@
 .page-tab {
   padding: 10px 20px;
   background: transparent;
-  border: 1px solid rgba(163, 163, 163, 0.3);
-  color: var(--text-soft);
+  border: 1px solid rgba(151, 228, 213, 0.2);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 11px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .page-tab:hover {
-  border-color: rgba(163, 163, 163, 0.5);
-  color: var(--hi);
+  border-color: rgba(151, 228, 213, 0.4);
+  color: #97E4D5;
 }
 
 .page-tab.active {

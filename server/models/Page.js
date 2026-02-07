@@ -44,6 +44,12 @@ const pageSchema = new mongoose.Schema({
     bio: String
   },
 
+  // 페이지 하단 노트 (수정 가능한 안내 문구)
+  note: {
+    type: String,
+    default: ''
+  },
+
   // 수정 정보
   updatedBy: {
     type: mongoose.Schema.Types.ObjectId,

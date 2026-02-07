@@ -4,6 +4,10 @@
   --text-soft: #a3a3a3;
   --text-strong: #ffffff;
   --mint: #97E4D5;
+
+  /* 🔧 테마 버튼 모바일 위치 */
+  --theme-btn-mobile-top: 25px;
+  --theme-btn-mobile-right: 20px;
 }
 
 *{ box-sizing: border-box; }
@@ -281,6 +285,12 @@ a:hover{ color: var(--hi); }
 
 /* Mobile responsive for theme switcher */
 @media (max-width: 768px){
+  /* 🔧 테마 버튼 위치 조정 */
+  .theme-switcher{
+    top: var(--theme-btn-mobile-top);
+    right: var(--theme-btn-mobile-right);
+  }
+
   .theme-btn{
     width: 16px;
     height: 16px;

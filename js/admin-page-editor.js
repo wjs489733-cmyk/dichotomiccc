@@ -116,6 +116,9 @@
         document.getElementById('contactOther').value = page.contactInfo.other || '';
       }
 
+      // Note 필드
+      document.getElementById('pageNote').value = page.note || '';
+
       // Quill 에디터 내용
       if (page.content) {
         quill.root.innerHTML = page.content;
@@ -144,6 +147,7 @@
         title: document.getElementById('title').value,
         subtitle: document.getElementById('subtitle').value,
         content: quill.root.innerHTML,
+        note: document.getElementById('pageNote').value,
         profile: {
           name: document.getElementById('profileName').value,
           focus: document.getElementById('profileFocus').value,

@@ -89,7 +89,8 @@
 
         <section class="selected-works" id="works">
           <h2 class="section-title galmuri">selected work</h2>
-          <ul class="works-list galmuri">
+          <ul class="works-list galmuri" id="selectedWorksList">
+            <!-- API에서 동적으로 로드됨. 아래는 폴백 -->
             <li><a href="#ddd">ddd</a></li>
             <li><a href="#thevois">thevois</a></li>
             <li><a href="#aurevo">aurevo</a></li>
@@ -155,22 +156,22 @@
 
   <section class="info-panel" id="aboutPanel" aria-hidden="true">
     <div class="info-panel-inner">
-      <div class="info-box">
-        <h3 class="info-title galmuri">저를 소개하는 내용입니다.</h3>
-        <p class="info-text">준비중 입니다.</p>
+      <div class="info-preview" id="aboutPreview" role="button" tabindex="0" aria-label="View about page">
+        <img id="aboutThumb" src="./assets/img/about-thumb.gif" alt="about preview" onerror="this.src='./assets/img/works/uxui/01.jpg'" />
+        <span class="info-label galmuri">about →</span>
       </div>
     </div>
-     <button class="close-panel-btn galmuri mobile-only" aria-label="Close panel">close [x]</button>
+    <button class="close-panel-btn galmuri mobile-only" aria-label="Close panel">close [x]</button>
   </section>
 
   <section class="info-panel" id="contactPanel" aria-hidden="true">
     <div class="info-panel-inner">
-      <div class="info-box">
-        <h3 class="info-title galmuri">저의 연락처 입니다.</h3>
-        <p class="info-text">준비중 입니다.</p>
+      <div class="info-preview" id="contactPreview" role="button" tabindex="0" aria-label="View contact page">
+        <img id="contactThumb" src="./assets/img/contact-thumb.gif" alt="contact preview" onerror="this.src='./assets/img/works/uxui/02.jpg'" />
+        <span class="info-label galmuri">contact →</span>
       </div>
     </div>
-     <button class="close-panel-btn galmuri mobile-only" aria-label="Close panel">close [x]</button>
+    <button class="close-panel-btn galmuri mobile-only" aria-label="Close panel">close [x]</button>
   </section>
 
   <div class="easter-modal" id="easterModal" aria-hidden="true">

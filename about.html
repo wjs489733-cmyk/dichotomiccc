@@ -39,8 +39,12 @@
         <li>Contact: <a href="mailto:wjs400@naver.com" id="contactEmail">wjs400@naver.com</a></li>
       </ul>
       <div id="additionalContent"></div>
-      <p class="note">텍스트/이미지 업데이트는 계속 진행 중이다.</p>
+      <p class="note" id="pageNote">텍스트/이미지 업데이트는 계속 진행 중이다.</p>
     </section>
+
+    <nav class="page-nav galmuri">
+      <a href="./contact.html" class="nav-link">contact →</a>
+    </nav>
   </main>
 
   <script src="./js/config.js"></script>
@@ -83,6 +87,11 @@
           document.getElementById('additionalContent').innerHTML = page.content;
         }
 
+        // Note 문구 업데이트
+        if (page.note && page.note.trim() !== '') {
+          document.getElementById('pageNote').textContent = page.note;
+        }
+
       } catch (error) {
         console.log('Using default about content');
       }
@@ -95,12 +104,11 @@
     const backBtn = document.getElementById('backBtn');
     const aboutTitle = document.getElementById('aboutTitle');
 
-    // back 버튼 클릭 시 인트로 페이지로 이동
+    // back 버튼 클릭 시 홈 화면으로 이동 (인트로 건너뛰기)
     if (backBtn) {
       backBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // 인트로를 다시 보여주기 위해 localStorage 제거
-        localStorage.removeItem('introVisited');
+        localStorage.setItem('introVisited', 'true');
         window.location.href = './index.html';
       });
     }

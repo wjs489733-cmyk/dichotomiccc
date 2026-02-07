@@ -23,13 +23,28 @@
     return;
   }
 
-  // 에러 상태 표시
-  function showError(message) {
-    projectTitle.textContent = 'Error';
+  // 에러 상태 표시 (Coming Soon 스타일)
+  function showError(message, showFallbackImage = true) {
+    // slug를 타이틀로 사용 (언더스코어 대신 공백, 대문자화)
+    const displayTitle = slug ? slug.replace(/_/g, ' ').toUpperCase() : 'Selected Work';
+    projectTitle.textContent = displayTitle;
+    document.title = `${displayTitle} · dichotomiccc`;
+
+    // 폴백 이미지 경로 (로컬 assets)
+    const fallbackImage = `../assets/img/selected/${slug}.jpg`;
+
     projectContent.innerHTML = `
-      <div class="empty-state">
-        <p class="galmuri">${message}</p>
-        <a href="../index.html" class="galmuri" style="margin-top: 20px; display: inline-block;">← Back to home</a>
+      <div class="coming-soon-state" style="text-align: center; padding: 40px 20px;">
+        ${showFallbackImage ? `
+          <div style="max-width: 400px; margin: 0 auto 24px;">
+            <img src="${fallbackImage}" alt="${displayTitle}"
+                 style="width: 100%; border: 1px solid rgba(163,163,163,0.35);"
+                 onerror="this.style.display='none'">
+          </div>
+        ` : ''}
+        <p class="galmuri" style="color: var(--hi); font-size: 14px; margin-bottom: 12px;">COMING SOON</p>
+        <p style="color: var(--text-soft); font-size: 13px; margin-bottom: 24px;">This project is currently being prepared.</p>
+        <a href="../index.html" class="galmuri" style="color: var(--text-soft); font-size: 12px;">← Back to home</a>
       </div>
     `;
   }

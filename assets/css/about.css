@@ -56,3 +56,21 @@
   opacity: 0.85;
   font-size: 12px;
 }
+
+/* Page Navigation */
+.page-nav{
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(163,163,163,0.2);
+}
+
+.nav-link{
+  font-size: 13px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover{
+  color: var(--hi);
+}
